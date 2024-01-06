@@ -6,28 +6,35 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour
 {
-    public float RotationSpeed = 1f;
-    public bool bcursor = true;
+    public float rotationYSpeed = 3f;
+    public float rotationXSpeed = 5f;
+    public bool bcursor = false;
     public float moveSpeed = 1f;
     public float JumpPower = 1f;
+
+    private float eulerAngleX;
+    private float eulerAngleY;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Application.targetFrameRate = 60;
         UnityEngine.Cursor.visible = bcursor;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 
-    Vector3 prevRot = Vector3.zero; 
     // Update is called once per frame
     void Update()
     {
-        Vector3 mouse = Input.mousePosition;
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
 
-        Vector3 target = new Vector3(0, mouse.x - 550, 0);
-        transform.parent.localEulerAngles = target * RotationSpeed;
-        target = new Vector3(Mathf.Clamp(-mouse.y + 260, -90f, 90f), 0, 0);
-        transform.localEulerAngles = target * RotationSpeed;
-        
+        eulerAngleY += mouseX * rotationYSpeed;
+        eulerAngleX -= mouseY * rotationXSpeed;
+
+        eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
+        transform.parent.rotation = Quaternion.Euler(0, eulerAngleY, 0);
+        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
+
         if (Input.GetKey(KeyCode.W))
         {
             transform.parent.position += transform.parent.forward * moveSpeed * Time.deltaTime;
@@ -48,5 +55,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetComponentInParent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
         }
+    }
+
+    private float ClampAngle(float angle, float min, float max)
+    {
+        if(angle < -360) angle += 360;
+        if(angle > 360) angle -= 360;
+        return Mathf.Clamp(angle, min, max);
     }
 }
