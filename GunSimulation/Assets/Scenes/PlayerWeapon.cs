@@ -34,7 +34,7 @@ public class PlayerWeapon : MonoBehaviour
         bullet.transform.position = bulletSpawn.position;
 
         Vector3 rotation = bullet.transform.rotation.eulerAngles;
-
+        
         bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
 
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward * bulletSpeed, ForceMode.Impulse);
