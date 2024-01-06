@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         target = new Vector3(-mouse.y, 0, 0);
         transform.localEulerAngles = target * speed;
 
+
         if(Input.GetKey(KeyCode.W))
         {
             transform.parent.position += transform.parent.forward * moveSpeed * Time.deltaTime;
