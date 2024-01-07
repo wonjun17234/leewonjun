@@ -35,7 +35,6 @@ public class PlayerWeapon : MonoBehaviour
         {
             isShooting = true;
             Fire();
-            temp();
         }
     }
 
@@ -54,6 +53,8 @@ public class PlayerWeapon : MonoBehaviour
             bullet.GetComponent<Rigidbody>().AddForce( - bulletSpawn.up * bulletSpeed, ForceMode.Impulse);
 
             StartCoroutine(DestroyBulletAfterTime(bullet, bulletLifeTime));
+
+            tt(gameObject.GetComponentsInChildren<GameObject>()[4]); //slide Ã£±â
         }
 
     }
@@ -74,10 +75,16 @@ public class PlayerWeapon : MonoBehaviour
 
             StartCoroutine(DestroyBulletAfterTime(cartridgeCase, cartridgeCaseLifeTime));
         }
-        isShooting = false;
+    }
+    private IEnumerator tt(GameObject slide)
+    {
+        for(int i =0; i < 8; i++)
+        {
+
+            yield return null;
+        }
     }
 
-    
 
     private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
     {
