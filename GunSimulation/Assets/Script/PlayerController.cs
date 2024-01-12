@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1f;
     public float JumpPower = 1f;
 
+    public GameObject body;
+    Rigidbody rigidbody;
     private float eulerAngleX;
     private float eulerAngleY;
     // Start is called before the first frame update
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate = 60;
         UnityEngine.Cursor.visible = bcursor;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+        rigidbody = body.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -32,28 +36,28 @@ public class PlayerController : MonoBehaviour
         eulerAngleX -= mouseY * rotationXSpeed;
 
         eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
-        transform.parent.rotation = Quaternion.Euler(0, eulerAngleY, 0);
+        body.transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
         transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.parent.position += transform.parent.forward * moveSpeed * Time.deltaTime;
+            body.transform.position += body.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.parent.position -= transform.parent.forward * moveSpeed * Time.deltaTime;
+            body.transform.position -= body.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.parent.position -= transform.parent.right * moveSpeed * Time.deltaTime;
+            body.transform.position -= body.transform.right * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.parent.position += transform.parent.right * moveSpeed * Time.deltaTime;
+            body.transform.position += body.transform.right * moveSpeed * Time.deltaTime;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            transform.GetComponentInParent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+            rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
         }
     }
 
