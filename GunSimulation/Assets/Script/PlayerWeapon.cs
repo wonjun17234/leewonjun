@@ -22,7 +22,6 @@ public class PlayerWeapon : MonoBehaviour
 
     public float cartridgeCaseLifeTime = 3;
 
-    private bool isShooting = false;
     void Start()
     {
         
@@ -31,9 +30,8 @@ public class PlayerWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !isShooting)
+        if(Input.GetMouseButtonDown(0))
         {
-            isShooting = true;
             Fire();
         }
     }
@@ -43,9 +41,9 @@ public class PlayerWeapon : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab);
 
-            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>()); //ºÎ¸ð °´Ã¼¿Í Ãæµ¹ X
+            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>()); //ï¿½Î¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½æµ¹ X
 
-            bullet.transform.position = bulletSpawn.position; //½ºÆù ÁöÁ¡À¸·Î °´Ã¼ ÀÌµ¿
+            bullet.transform.position = bulletSpawn.position; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ìµï¿½
             Vector3 rotation = bullet.transform.rotation.eulerAngles; 
 
             bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
@@ -54,13 +52,7 @@ public class PlayerWeapon : MonoBehaviour
 
             StartCoroutine(DestroyBulletAfterTime(bullet, bulletLifeTime));
 
-            tt(gameObject.GetComponentsInChildren<GameObject>()[4]); //slide Ã£±â
         }
-
-    }
-
-    private void temp()
-    {
         {
             GameObject cartridgeCase = Instantiate(casingPrefab);
 
@@ -76,14 +68,7 @@ public class PlayerWeapon : MonoBehaviour
             StartCoroutine(DestroyBulletAfterTime(cartridgeCase, cartridgeCaseLifeTime));
         }
     }
-    private IEnumerator tt(GameObject slide)
-    {
-        for(int i =0; i < 8; i++)
-        {
 
-            yield return null;
-        }
-    }
 
 
     private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
