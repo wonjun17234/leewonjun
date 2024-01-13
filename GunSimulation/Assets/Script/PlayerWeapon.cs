@@ -90,7 +90,7 @@ public class PlayerWeapon : MonoBehaviour
 
             bullet.GetComponent<Rigidbody>().AddForce( - bulletSpawn.up * bulletSpeed, ForceMode.Impulse);
 
-            StartCoroutine(DestroyBulletAfterTime(bullet, bulletLifeTime));
+            StartCoroutine(DestroyObject(bullet, bulletLifeTime));
             StartCoroutine(slideBack());
             //이펙트 구현
             particleObject.Play();
@@ -111,7 +111,7 @@ public class PlayerWeapon : MonoBehaviour
             float random = Random.Range(0.1f, 1.5f);
             cartridgeCase.GetComponent<Rigidbody>().AddForce((cartridgeCaseSpawn.forward + cartridgeCaseSpawn.right * random) * cartridgeCaseSpeed, ForceMode.Impulse);
 
-            StartCoroutine(DestroyBulletAfterTime(cartridgeCase, cartridgeCaseLifeTime));
+            StartCoroutine(DestroyObject(cartridgeCase, cartridgeCaseLifeTime));
         }
     }
     private IEnumerator shot()
@@ -158,10 +158,10 @@ public class PlayerWeapon : MonoBehaviour
     
 
 
-    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+    private IEnumerator DestroyObject(GameObject DObject, float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        Destroy(bullet);
+        Destroy(DObject);
     }
 }
