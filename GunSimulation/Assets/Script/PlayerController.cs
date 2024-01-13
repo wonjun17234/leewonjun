@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
         eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
         body.transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
-        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
+        transform.rotation= Quaternion.Euler(eulerAngleX, body.transform.rotation.y, 0);
 
         if (Input.GetKey(KeyCode.W))
         {

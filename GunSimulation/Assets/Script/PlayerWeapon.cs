@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class PlayerWeapon : MonoBehaviour
@@ -17,7 +18,12 @@ public class PlayerWeapon : MonoBehaviour
 
     public GameObject OBJTrigger;
 
+    public GameObject OBJMagEmpty;
+    public GameObject OBJMagFull;
+
     public ParticleSystem particleObject;
+
+    public EventSystem eventSystem;
 
     public float bulletSpeed = 30;
     public float bulletLifeTime = 5;
@@ -25,35 +31,58 @@ public class PlayerWeapon : MonoBehaviour
     public float cartridgeCaseSpeed = 30;
     public float cartridgeCaseLifeTime = 3;
     
-    private Vector3 startPos;
-    private Vector3 targetPos;
+    private Vector3 SlideStartPos;
+    private Vector3 SlideTargetPos;
+    private Vector3 MagStartPos;
+    private Vector3 MagTargetPos;
     
     private bool isShooting = false;
+    private bool isReloading = false;
+
+    private int MaxBullet = 6;
+    private int currentBullet = 0;
     void Start()
     {
-        startPos = OBJSlide.transform.localPosition;
-        targetPos = new Vector3(startPos.x, startPos.y, startPos.z - 0.045f);
+        SlideStartPos = OBJSlide.transform.localPosition;
+        SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
+        MagStartPos = new Vector3(0, -0.0115f, -0.0545f);
+        MagTargetPos = new Vector3(0, -0.1195f, -0.0962f);
+
+    currentBullet = MaxBullet;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(0) && !isShooting)
+        if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading &&  !eventSystem.IsPointerOverGameObject())
         {
             isShooting = true;
             StartCoroutine(shot());
         }
+        /*if(currentBullet == 1)
+        {
+            mesh change
+        }
+        */
     }
-    
+    public void Reload() {
+        isReloading = true;
+        currentBullet = MaxBullet;
+        /*
+         mag Reload
+         
+         */
+    }
+
     private void Fire()
     {
         {
             GameObject bullet = Instantiate(OBJBulletPrefab);
 
-            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>()); //�θ� ��ü�� �浹 X
+            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>()); 
 
-            bullet.transform.localPosition = bulletSpawn.position; //���� �������� ��ü �̵�
+            bullet.transform.localPosition = bulletSpawn.position; 
             Vector3 rotation = bullet.transform.rotation.eulerAngles; 
 
             bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
@@ -111,7 +140,7 @@ public class PlayerWeapon : MonoBehaviour
         while(time < 0.05f)
         {
             time += Time.deltaTime;
-            OBJSlide.transform.localPosition = Vector3.Lerp(startPos, targetPos, time * 20f);
+            OBJSlide.transform.localPosition = Vector3.Lerp(SlideStartPos, SlideTargetPos, time * 20f);
             yield return null;
         }
         time = 0;
@@ -119,7 +148,7 @@ public class PlayerWeapon : MonoBehaviour
         while (time < 0.05f)
         {
             time += Time.deltaTime;
-            OBJSlide.transform.localPosition = Vector3.Lerp(targetPos, startPos, time * 20f);
+            OBJSlide.transform.localPosition = Vector3.Lerp(SlideTargetPos, SlideStartPos, time * 20f);
             yield return null;
         }
         
