@@ -64,17 +64,22 @@ public class PlayerWeapon : MonoBehaviour
     }
     private IEnumerator slideBack()
     {
-        for(int i = 1; i <= 10; i++)
+        float time = 0f;
+        while(time < 0.05f)
         {
-            slide.transform.localPosition = Vector3.Lerp(startPos, targetPos, i * 0.1f);
+            time += Time.deltaTime;
+            slide.transform.localPosition = Vector3.Lerp(startPos, targetPos, time * 20f);
             yield return null;
         }
+        time = 0;
         sparking();
-        for (int i = 1; i <= 10; i++)
+        while (time < 0.05f)
         {
-            slide.transform.localPosition = Vector3.Lerp(targetPos, startPos, i * 0.1f);
+            time += Time.deltaTime;
+            slide.transform.localPosition = Vector3.Lerp(targetPos, startPos, time * 20f);
             yield return null;
         }
+        
         isShooting = false;
     }
     private void sparking()
