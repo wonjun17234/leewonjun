@@ -13,22 +13,22 @@ public class PlayerController : MonoBehaviour
     public float JumpPower = 1f;
 
     public GameObject body;
-    Rigidbody rigidbody;
+    public PlayerWeapon weapon;
     private float eulerAngleX;
     private float eulerAngleY;
+
     // Start is called before the first frame update
     void Awake()
     {
         Application.targetFrameRate = 60;
         UnityEngine.Cursor.visible = bcursor;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
-        rigidbody = body.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
         eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
         body.transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
-        transform.rotation= Quaternion.Euler(eulerAngleX, body.transform.rotation.y, 0);
+        transform.rotation= Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -57,7 +57,11 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+            body.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            weapon.Reload();
         }
     }
 
