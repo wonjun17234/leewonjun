@@ -20,6 +20,7 @@ public class PlayerWeapon : MonoBehaviour
 
     public GameObject OBJMagEmpty;
     public GameObject OBJMagFull;
+    private MeshFilter filter;
 
     public ParticleSystem particleObject;
 
@@ -43,12 +44,12 @@ public class PlayerWeapon : MonoBehaviour
     private int currentBullet = 0;
     void Start()
     {
+        filter = OBJMagFull.GetComponent<MeshFilter>();
         SlideStartPos = OBJSlide.transform.localPosition;
         SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
         MagStartPos = new Vector3(0, -0.0115f, -0.0545f);
         MagTargetPos = new Vector3(0, -0.1195f, -0.0962f);
-
-    currentBullet = MaxBullet;
+        currentBullet = MaxBullet;
     }
 
     // Update is called once per frame

@@ -1014,6 +1014,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: g18_mag_full
       objectReference: {fileID: 0}
+    - target: {fileID: 7749315951222873240, guid: 3cb9471d6bbb65f459f95cef263c1765, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7749315951222873240, guid: 3cb9471d6bbb65f459f95cef263c1765, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 18759c3f5b3cb5f4b986fd19aa11ae68, type: 2}
     - target: {fileID: 8918667818273195177, guid: 3cb9471d6bbb65f459f95cef263c1765, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
