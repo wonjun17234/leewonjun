@@ -145,7 +145,10 @@ public class PlayerWeapon : MonoBehaviour
             yield return null;
         }
         time = 0;
-        sparking();
+        if(!isReloading)
+        {
+            sparking();
+        }
         while (time < 0.05f)
         {
             time += Time.deltaTime;
