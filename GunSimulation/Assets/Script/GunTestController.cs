@@ -68,7 +68,6 @@ public class GunTestController : MonoBehaviour
         {
 
             Vector3 mouseDelta = Input.mousePosition - mousePos_prev;
-            Debug.Log(mouseDelta);
             Yaxis = Yaxis + mouseDelta.x * RotationSpeed;
             Xaxis = Xaxis - mouseDelta.y * RotationSpeed;
             Xaxis = ClampAngle(Xaxis, -90f, 90f);

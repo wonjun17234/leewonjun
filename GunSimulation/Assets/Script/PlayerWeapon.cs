@@ -41,9 +41,15 @@ public class PlayerWeapon : MonoBehaviour
 
     private int MaxBullet = 6; //최대 총알 개수
     private int currentBullet = 0; //현재 총알 개수
+
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
     void Start()
     {
-
+        
         SlideStartPos = OBJSlide.transform.localPosition; //현재의 슬라이드 위치를 시작 슬라이드로 설정
         SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
         MagStartPos = new Vector3(0, -0.0115f, -0.0545f);
@@ -54,6 +60,7 @@ public class PlayerWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(eventSystem != null)
         {
             if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading && !eventSystem.IsPointerOverGameObject())
@@ -72,18 +79,18 @@ public class PlayerWeapon : MonoBehaviour
                 currentBullet--;
             }
         }
-        
-
         if(currentBullet == 0)
         {
             OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
         }
-        
     }
+    
     public void Reload() 
     {
         isReloading = true;
         currentBullet = MaxBullet;
+        
+        
         StartCoroutine(moveReload());
     }
     private IEnumerator moveReload()
@@ -115,22 +122,22 @@ public class PlayerWeapon : MonoBehaviour
     private void Fire() // 총알이 날아가며 발사 이펙트 시작
     {
         
-        {
-            GameObject bullet = Instantiate(OBJBulletPrefab);
+        GameObject bullet = Instantiate(OBJBulletPrefab);
 
-            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>()); 
+        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
-            bullet.transform.localPosition = bulletSpawn.position; 
-            Vector3 rotation = bullet.transform.rotation.eulerAngles; 
+        bullet.transform.localPosition = bulletSpawn.position; 
+        Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
 
-            bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
+        //bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
+        float randX = Random.Range(-0.5f, 0.5f);
+        float randY = Random.Range(-0.5f, 0.5f);
+        float randZ = Random.Range(-0.5f, 0.5f);
+        bullet.transform.rotation = Quaternion.Euler( -90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
+        bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
 
-            bullet.GetComponent<Rigidbody>().AddForce( - bulletSpawn.up * bulletSpeed, ForceMode.Impulse);
-
-            particleObject.Play(); //발사 이펙트
-            StartCoroutine(DestroyObject(bullet, bulletLifeTime));
-            
-        }
+        //particleObject.Play(); //발사 이펙트
+        StartCoroutine(DestroyObject(bullet, bulletLifeTime));
     }
 
     private void sparking() // 탄피가 튀는 함수
@@ -201,11 +208,11 @@ public class PlayerWeapon : MonoBehaviour
     }
     
 
-
     private IEnumerator DestroyObject(GameObject DObject, float delay) //삭제할 오브젝트와 시간을 넘기면 그 시간 후에 오브젝트 삭제
     {
         yield return new WaitForSeconds(delay);
 
         Destroy(DObject);
     }
+    
 }

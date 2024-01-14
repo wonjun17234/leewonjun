@@ -5,15 +5,18 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    private void OnTriggerEnter(Collider other)
-    {
-        print("hit" + other.name + "!");
-        Enemy enemy = other.GetComponent<Enemy>();
-        if(enemy != null)
-        {
-            enemy.enemyDistroy();
-            Destroy(gameObject);
-        }
+    
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("µé¾î¿È");
+        Target target = collision.gameObject.GetComponent<Target>();
+        if(target != null)
+        {
+            GameObject e = Instantiate(target.Effect);
+            e.transform.position = transform.position;
+            e.transform.parent = collision.transform;
+        }
+        
     }
 }
