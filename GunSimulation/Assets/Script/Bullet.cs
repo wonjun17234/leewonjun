@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
-    
-
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("µé¾î¿È");
-        Target target = collision.gameObject.GetComponent<Target>();
-        if(target != null)
+
+        if(collision.gameObject.GetComponent<Target>() != null)
         {
-            GameObject e = Instantiate(target.Effect);
+            
+            GameObject e = Instantiate(collision.gameObject.GetComponent<Target>().Effect);
             e.transform.position = transform.position;
             e.transform.parent = collision.transform;
         }
-        
     }
 }

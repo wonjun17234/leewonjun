@@ -157,7 +157,6 @@ GameObject:
   - component: {fileID: 4884917773571521041}
   - component: {fileID: 2780365149125054584}
   - component: {fileID: 6166548139619056141}
-  - component: {fileID: 9040901216782691984}
   m_Layer: 0
   m_Name: g18_grip
   m_TagString: Untagged
@@ -230,28 +229,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9040901216782691984
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183181544825041471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6418226143146545764, guid: e0631dfc69026554d87adf886393f4b3, type: 3}
 --- !u!1 &1283531728235445007
 GameObject:
   m_ObjectHideFlags: 0

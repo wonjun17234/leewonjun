@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public Camera camera1;
     public Camera camera3;
-    bool isCamera3 = true;
+    public bool isCamera3 = true;
     private void Awake()
     {
         camera1.enabled = false;

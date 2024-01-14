@@ -98,7 +98,7 @@ public class PlayerWeapon : MonoBehaviour
         float time = 0;
         while(time < 1f)
         {
-            time += Time.deltaTime;
+            time += Time.deltaTime * 2;
             OBJMag.transform.localPosition = Vector3.Lerp(MagStartPos, MagTargetPos, time);
             yield return null;
         }
@@ -107,11 +107,11 @@ public class PlayerWeapon : MonoBehaviour
         StartCoroutine(DestroyObject(OBJMag, 3f));
         GameObject newOBJMag = Instantiate(OBJMagI, transform);
         newOBJMag.transform.localPosition = MagTargetPos;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         time = 0;
         while (time < 1f)
         {
-            time += Time.deltaTime;
+            time += Time.deltaTime * 2;
             newOBJMag.transform.localPosition = Vector3.Lerp(MagTargetPos, MagStartPos,  time);
             yield return null;
         }

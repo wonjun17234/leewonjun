@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Application.targetFrameRate = 60;
         UnityEngine.Cursor.visible = bcursor;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
