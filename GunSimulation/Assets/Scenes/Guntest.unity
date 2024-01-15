@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &38597908 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2974359248540026323, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-  m_PrefabInstance: {fileID: 1005244966522399949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &172821548
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +791,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7507effc3f66de24d8b401c21db66dcc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1756,6 +1751,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!198 &2009882114 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2034084227258585556, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+  m_PrefabInstance: {fileID: 1005244966522399949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1005244966522399949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1764,22 +1764,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 645656946}
     m_Modifications:
-    - target: {fileID: 435362828478136588, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 435362828478136588, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 123ac6dc79004e54b8b352a7e64acdca, type: 2}
-    - target: {fileID: 690228889613985141, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: OBJMag
-      value: 
-      objectReference: {fileID: 38597908}
-    - target: {fileID: 690228889613985141, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: OBJMagI
-      value: 
-      objectReference: {fileID: 1668207521144944358, guid: 3cb9471d6bbb65f459f95cef263c1765, type: 3}
     - target: {fileID: 690228889613985141, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: bulletSpeed
       value: 100
@@ -1789,36 +1773,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 468097581}
     - target: {fileID: 690228889613985141, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: bulletLifeTime
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: particleObject
+      value: 
+      objectReference: {fileID: 2009882114}
     - target: {fileID: 2507327100966263441, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_Name
       value: g18
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: ShapeModule.angle
-      value: 7.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: TrailModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 14.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102749657267730577, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 13.76
       objectReference: {fileID: 0}
     - target: {fileID: 4523743120451833830, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1859,10 +1819,6 @@ PrefabInstance:
     - target: {fileID: 4523743120451833830, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663698972033888716, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0595
       objectReference: {fileID: 0}
     - target: {fileID: 6663698972033888716, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_LocalPosition.z

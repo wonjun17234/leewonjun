@@ -136,7 +136,7 @@ public class PlayerWeapon : MonoBehaviour
         bullet.transform.rotation = Quaternion.Euler( -90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
         bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
 
-        //particleObject.Play(); //발사 이펙트
+        particleObject.Play(); //발사 이펙트
         StartCoroutine(DestroyObject(bullet, bulletLifeTime));
     }
 
