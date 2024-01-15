@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             weapon.Reload();
         }
+        
     }
 
     private float ClampAngle(float angle, float min, float max)
