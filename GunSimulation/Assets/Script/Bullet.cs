@@ -14,5 +14,6 @@ public class Bullet : MonoBehaviour
             e.transform.parent = collision.transform;
             
         }
+        
     }
 }

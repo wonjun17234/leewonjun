@@ -30,17 +30,17 @@ public class PlayerWeapon : MonoBehaviour
 
     public float cartridgeCaseSpeed = 30; //탄피 스피드
     public float cartridgeCaseLifeTime = 3; //탄피 살아있는 시간
-    
+
     private Vector3 SlideStartPos; //슬라이드 움직임의 처음 
     private Vector3 SlideTargetPos; //슬라이드가 어디까지 당겨질건지
     private Vector3 MagStartPos; //탄창의 처음 위치
     private Vector3 MagTargetPos; //탄창이 어디까지 빠질건지
-    
+
     private bool isShooting = false; //지금 총을 쏘는 중인지
     private bool isReloading = false; //지금 장전 중인지
 
     private int MaxBullet = 6; //최대 총알 개수
-    private int currentBullet = 0; //현재 총알 개수
+    private int currentBullet = 6; //현재 총알 개수
 
 
     private void Awake()
@@ -49,19 +49,19 @@ public class PlayerWeapon : MonoBehaviour
     }
     void Start()
     {
-        
+
         SlideStartPos = OBJSlide.transform.localPosition; //현재의 슬라이드 위치를 시작 슬라이드로 설정
         SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
-        MagStartPos = new Vector3(0, -0.0115f, -0.0545f);
-        MagTargetPos = new Vector3(0, -0.1452f, -0.1057f);
+        MagStartPos = OBJMag.transform.localPosition;
+        MagTargetPos = new Vector3(MagStartPos.x, MagStartPos.y - 0.25f, MagStartPos.z - 0.1057f);
         currentBullet = MaxBullet;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if(eventSystem != null)
+        
+        if (eventSystem != null)
         {
             if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading && !eventSystem.IsPointerOverGameObject())
             {
@@ -79,31 +79,37 @@ public class PlayerWeapon : MonoBehaviour
                 currentBullet--;
             }
         }
-        if(currentBullet == 0)
+        if (currentBullet == 0)
         {
             OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
         }
     }
-    
-    public void Reload() 
+
+    public void Reload()
     {
-        isReloading = true;
-        currentBullet = MaxBullet;
-        
-        
-        StartCoroutine(moveReload());
+        if (!isReloading)
+        {
+            isReloading = true;
+            currentBullet = MaxBullet;
+
+
+            StartCoroutine(moveReload());
+        }
+
     }
     private IEnumerator moveReload()
     {
         float time = 0;
-        while(time < 1f)
+        while (time < 1f)
         {
             time += Time.deltaTime * 2;
             OBJMag.transform.localPosition = Vector3.Lerp(MagStartPos, MagTargetPos, time);
             yield return null;
         }
         OBJMag.GetComponent<Rigidbody>().useGravity = true;
-        yield return new WaitForSeconds(1f);
+        OBJMag.GetComponent<Rigidbody>().isKinematic = false;
+
+        yield return new WaitForSeconds(0.4f);
         StartCoroutine(DestroyObject(OBJMag, 3f));
         GameObject newOBJMag = Instantiate(OBJMagI, transform);
         newOBJMag.transform.localPosition = MagTargetPos;
@@ -112,7 +118,7 @@ public class PlayerWeapon : MonoBehaviour
         while (time < 1f)
         {
             time += Time.deltaTime * 2;
-            newOBJMag.transform.localPosition = Vector3.Lerp(MagTargetPos, MagStartPos,  time);
+            newOBJMag.transform.localPosition = Vector3.Lerp(MagTargetPos, MagStartPos, time);
             yield return null;
         }
         OBJMag = newOBJMag;
@@ -121,19 +127,19 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Fire() // 총알이 날아가며 발사 이펙트 시작
     {
-        
+
         GameObject bullet = Instantiate(OBJBulletPrefab);
 
         Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
-        bullet.transform.localPosition = bulletSpawn.position; 
+        bullet.transform.localPosition = bulletSpawn.position;
         Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
 
         //bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
         float randX = Random.Range(-0.5f, 0.5f);
         float randY = Random.Range(-0.5f, 0.5f);
         float randZ = Random.Range(-0.5f, 0.5f);
-        bullet.transform.rotation = Quaternion.Euler( -90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
+        bullet.transform.rotation = Quaternion.Euler(-90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
         bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
 
         particleObject.Play(); //발사 이펙트
@@ -168,11 +174,11 @@ public class PlayerWeapon : MonoBehaviour
             OBJTrigger.transform.localRotation = Quaternion.Euler(currentX, 0f, 0f);
             yield return null;
         }
-        if(currentBullet >= 0)//총알이 없어도 쏠수는 있게
+        if (currentBullet >= 0)//총알이 없어도 쏠수는 있게
         {
             Fire();
         }
-        
+
         StartCoroutine(slideBack());
         time = 0;
         while (time < 0.05f)
@@ -186,14 +192,14 @@ public class PlayerWeapon : MonoBehaviour
     private IEnumerator slideBack() //슬라이드를 뒤로 넘기는 함수, 끝까지 가면 탄피가 튀는 함수 호출
     {
         float time = 0f;
-        while(time < 0.05f)
+        while (time < 0.05f)
         {
             time += Time.deltaTime;
             OBJSlide.transform.localPosition = Vector3.Lerp(SlideStartPos, SlideTargetPos, time * 20f);
             yield return null;
         }
         time = 0;
-        if(!isReloading && currentBullet >= 0) //장전할때도 쓰기 위해서, 총알이 없어도 쏘기 위해서
+        if (!isReloading && currentBullet >= 0) //장전할때도 쓰기 위해서, 총알이 없어도 쏘기 위해서
         {
             sparking();
         }
@@ -203,10 +209,10 @@ public class PlayerWeapon : MonoBehaviour
             OBJSlide.transform.localPosition = Vector3.Lerp(SlideTargetPos, SlideStartPos, time * 20f);
             yield return null;
         }
-        
+
         isShooting = false;
     }
-    
+
 
     private IEnumerator DestroyObject(GameObject DObject, float delay) //삭제할 오브젝트와 시간을 넘기면 그 시간 후에 오브젝트 삭제
     {
@@ -214,5 +220,5 @@ public class PlayerWeapon : MonoBehaviour
 
         Destroy(DObject);
     }
-    
+
 }
