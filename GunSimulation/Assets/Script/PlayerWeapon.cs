@@ -43,14 +43,20 @@ public class PlayerWeapon : MonoBehaviour
     private int currentBullet = 6; //현재 총알 개수
 
     public ParticleSystem particleLauncher;
-    
-
+    private AudioSource audio;
+    public List<AudioClip> audioClips;
+    private int audioIndex;
     private void Awake()
     {
         Application.targetFrameRate = 60;
     }
     void Start()
     {
+        audio = GetComponent<AudioSource>();
+        audio.loop = false;
+        audio.mute = false;
+        audio.playOnAwake = false;
+
         SlideStartPos = OBJSlide.transform.localPosition; //현재의 슬라이드 위치를 시작 슬라이드로 설정
         SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
         MagStartPos = OBJMag.transform.localPosition;
@@ -83,7 +89,13 @@ public class PlayerWeapon : MonoBehaviour
         if (currentBullet == 0)
         {
             OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
+            
         }
+        if(currentBullet < 0)
+        {
+            audioIndex = 1;
+        }
+        
     }
     
 
@@ -91,6 +103,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (!isReloading)
         {
+            audioIndex = 0;
             isReloading = true;
             currentBullet = MaxBullet;
 
@@ -135,7 +148,7 @@ public class PlayerWeapon : MonoBehaviour
         //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
         //bullet.transform.localPosition = bulletSpawn.position;
-        Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
+        //Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
 
         ////bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
         //float randX = Random.Range(-0.5f, 0.5f);
@@ -145,6 +158,7 @@ public class PlayerWeapon : MonoBehaviour
         //bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
 
 
+        
         particleObject.Play(); //발사 이펙트
         ParticleSystem.MainModule psMain = particleLauncher.main;
         psMain.startColor = Color.red;
@@ -181,6 +195,7 @@ public class PlayerWeapon : MonoBehaviour
             OBJTrigger.transform.localRotation = Quaternion.Euler(currentX, 0f, 0f);
             yield return null;
         }
+        audio.PlayOneShot(audioClips[audioIndex]);
         if (currentBullet >= 0)//총알이 없어도 쏠수는 있게
         {
             Fire();
