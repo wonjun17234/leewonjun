@@ -43,7 +43,6 @@ public class GunTestController : MonoBehaviour
         //mousePos_prev = Input.mousePosition;
         currentDistance = Vector3.Distance(Vector3.zero, transform.position);
         targetRotation = new Vector3(0, Yaxis, 0);
-        
     }
 
     // Update is called once per frame
