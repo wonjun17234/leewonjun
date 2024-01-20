@@ -42,6 +42,8 @@ public class PlayerWeapon : MonoBehaviour
     private int MaxBullet = 6; //최대 총알 개수
     private int currentBullet = 6; //현재 총알 개수
 
+    public ParticleSystem particleLauncher;
+    
 
     private void Awake()
     {
@@ -49,7 +51,6 @@ public class PlayerWeapon : MonoBehaviour
     }
     void Start()
     {
-
         SlideStartPos = OBJSlide.transform.localPosition; //현재의 슬라이드 위치를 시작 슬라이드로 설정
         SlideTargetPos = new Vector3(SlideStartPos.x, SlideStartPos.y, SlideStartPos.z - 0.045f);
         MagStartPos = OBJMag.transform.localPosition;
@@ -84,6 +85,7 @@ public class PlayerWeapon : MonoBehaviour
             OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
         }
     }
+    
 
     public void Reload()
     {
@@ -128,22 +130,27 @@ public class PlayerWeapon : MonoBehaviour
     private void Fire() // 총알이 날아가며 발사 이펙트 시작
     {
 
-        GameObject bullet = Instantiate(OBJBulletPrefab);
+        //GameObject bullet = Instantiate(OBJBulletPrefab);
 
-        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
+        //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
-        bullet.transform.localPosition = bulletSpawn.position;
+        //bullet.transform.localPosition = bulletSpawn.position;
         Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
 
-        //bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
-        float randX = Random.Range(-0.5f, 0.5f);
-        float randY = Random.Range(-0.5f, 0.5f);
-        float randZ = Random.Range(-0.5f, 0.5f);
-        bullet.transform.rotation = Quaternion.Euler(-90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
-        bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
+        ////bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
+        //float randX = Random.Range(-0.5f, 0.5f);
+        //float randY = Random.Range(-0.5f, 0.5f);
+        //float randZ = Random.Range(-0.5f, 0.5f);
+        //bullet.transform.rotation = Quaternion.Euler(-90 + randX, transform.eulerAngles.y + randY, 0 + randZ);
+        //bullet.transform.GetComponent<Rigidbody>().AddForce(-bullet.transform.up * bulletSpeed, ForceMode.Impulse);
+
 
         particleObject.Play(); //발사 이펙트
-        StartCoroutine(DestroyObject(bullet, bulletLifeTime));
+        ParticleSystem.MainModule psMain = particleLauncher.main;
+        psMain.startColor = Color.red;
+        particleLauncher.Emit(1);
+
+        //StartCoroutine(DestroyObject(bullet, bulletLifeTime));
     }
 
     private void sparking() // 탄피가 튀는 함수
