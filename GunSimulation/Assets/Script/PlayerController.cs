@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1f;
     public float JumpPower = 1f;
 
+    public GameObject Camera;
+
     public GameObject body;
     public PlayerWeapon weapon;
     private float eulerAngleX;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         UnityEngine.Cursor.visible = bcursor;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     // Update is called once per frame
@@ -36,23 +39,23 @@ public class PlayerController : MonoBehaviour
 
         eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
         body.transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
-        transform.rotation= Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
+        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY - 50f, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
-            body.transform.position += body.transform.forward * moveSpeed * Time.deltaTime;
+            body.transform.position += Camera.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            body.transform.position -= body.transform.forward * moveSpeed * Time.deltaTime;
+            body.transform.position -= Camera.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            body.transform.position -= body.transform.right * moveSpeed * Time.deltaTime;
+            body.transform.position -= Camera.transform.right * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            body.transform.position += body.transform.right * moveSpeed * Time.deltaTime;
+            body.transform.position += Camera.transform.right * moveSpeed * Time.deltaTime;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     }
     public void changeCamera()
     {
-        camera1.enabled = isCamera3;
+        camera1.enabled  = isCamera3;
         pointOfView1.SetActive(isCamera3);
         isCamera3 = !isCamera3;
         camera3.enabled = isCamera3;
