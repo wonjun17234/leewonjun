@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="TemplateData/style.css" />
   </head>
   <body>
-    <div></div>
+    <div id="unity-header"><h1>권총 시뮬레이션</h1></div>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -23,7 +23,53 @@
         <div id="unity-fullscreen-button"></div>
         <div id="unity-build-title">GunSimulation</div>
       </div>
+      <div id="unity-a">
+        총을 발사하면 방아쇠 코루틴 함수가 실행되고 선형보간을 활용하여 방아쇠가
+        회전하며 방아쇠가 당겨지는 애니메이션을 구현했다. <br />
+        만약 총알이 남아있으면 총알을 발사하는 함수와 슬라이드 코루틴 함수를
+        실행하고 총알이 없으면 슬라이드 코루틴 함수만 실행한다.<br />
+        이후 방아쇠를 원위치로 회전한다.<br />
+        슬라이드 코루틴 함수가 실행되면 선형보간을 활용해 슬라이드를 뒤로
+        움직이는 애니메이션이 실행된다.<br />
+        만약 총알이 남아있으면 탄피가 튀는 함수를 호출하고 아니면 호출하지
+        않는다. 이후 슬라이드를 원위치로 움직인다.<br />
+        탄피가 튀는 함수는 미리 할당한 탄피 프리팹을 인스턴스화 시킨 후 미리
+        지정한 탄피배출구에 스폰하여 RigidBody의 AddForce 함수를 이용해 탄피가
+        튀는 움직임을 구현했다. <br />
+        총알이 다 떨어지면 탄창의 mesh를 총알이 없는 탄창으로 변경하였다.<br />
+
+        파티클 시스템을 활용하여 총염 및 총알의 궤적을 구현하였고, 파티클
+        시스템의 OnParticleCollision으로 Particle과 Target이 충돌한 곳의 위치에
+        탄흔을 생성하였다.<br />
+
+        1인칭 카메라는 재장전과 시점변환, 3인칭 카메라에서는 재장전 및 줌인,
+        줌아웃과 시점변환을 구현하였다.<br />
+        줌인, 줌아웃은 버튼을 누르면 각각 매개변수로 1과 -1을 보내고 int 변수인
+        sign에 저장한 뒤 버튼을 눌렀는지를 확인하는 bool 변수인 isClicked을
+        true로 변경한다.<br />
+        LateUpdate 함수에서 isClicked을 계속 확인하여 true이면 sign을 곱하여
+        position을 움직인다. 이 거리는 총과 카메라의 거리를 Vector3.Distance로
+        구한 뒤 미리 지정한 최소/최대값을 못 넘기게 한다.<br />
+        줌인, 줌아웃 버튼을 때면 isClicked를 false로 변경하며 더 이상 카메라가
+        안움직인다.<br />
+        시점변환은 GameObject.SetActive 변수와 Behaviour.enabled 변수를 활용해
+        카메라 2개를 껏다 키는 방식으로 구현하였다.<br />
+        재장전은 탄창을 미리 지정한 위치까지 선형보간을 이용해 이동한 후
+        RigidBody.useGravity를 활성화해 떨어지게 구현하였고, 미리 할당한 탄창
+        프리팹을 지정한 위치에 생성한 후 다시 선형보간을 이용해 원래 위치로
+        이동시킨다.<br />
+      </div>
+      <div id="unity-b">
+        Unity Technologies, 2023년 2월 20일,
+        https://assetstore.unity.com/packages/vfx/particles/legacy-particle-pack-73777<br />
+        bob_4d, 2023년 1월 6일,
+        https://www.turbosquid.com/3d-models/g18-2010044<br />
+        -라일락-, 2019년 7월 14일, https://pgtd.tistory.com/227<br />
+        NikiYani, 2019년 1월 10일,
+        https://assetstore.unity.com/packages/3d/environments/military-target-136071<br />
+      </div>
     </div>
+
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
