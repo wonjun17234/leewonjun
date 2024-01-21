@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //거점 방어인지 거점 공격인지 마구잡이 사냥인지
         time += Time.deltaTime;
         if(time >= 3) //만약 플레이어를 발견 했다면 타겟 변경 안되게 변경하기 && 큐브가 아닌 특정 경로로 바꾸기
         {
