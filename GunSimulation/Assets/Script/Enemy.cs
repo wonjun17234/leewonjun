@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +12,14 @@ public class Enemy : MonoBehaviour
     public Transform[] target;
     private float time = 0;
     public int index = 0;
+    public int state;
+
+    public GameObject weapon;
+
+    public float radius;
+    private RaycastHit rayHit;
+    private RaycastHit[] sphereHit;
+
     void Start()
     {
         if(nma ==null)
@@ -18,43 +28,78 @@ public class Enemy : MonoBehaviour
             Debug.LogWarning("nma가 설정이 안돼있음");
         }
         nma.destination = target[index].position;
+        state = 0;
+    }
+    
+    void FixedUpdate()
+    {
+        int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
+        sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
+        for (int i = 0; i < sphereHit.Length; i++)
+        {
+            Debug.Log(sphereHit[i].transform.gameObject.name);
+        }
+
+        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 10) && rayHit.transform.tag == "Player")
+        {
+            state = 1;
+        }
+
+        if(state == 1 && transform.position.x == nma.destination.x && transform.position.z == nma.destination.z)
+        {
+            state = 2;
+        }
     }
 
-    // Update is called once per frame
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
     void Update()
     {
-        //거점 방어인지 거점 공격인지 마구잡이 사냥인지
         time += Time.deltaTime;
-        if(time >= 3) //만약 플레이어를 발견 했다면 타겟 변경 안되게 변경하기 && 큐브가 아닌 특정 경로로 바꾸기
-        {
-            time = 0;
-            index = Random.Range(0, 3);
-            nma.destination = target[index].position;
-        }
-        
-        RaycastHit hit;
-        // 플레이어를 발견하면 큐브 리스트중에 가장 가까운 큐브가 있는지 확인하고 있으면 가장 가까운 큐브로 이동(이동 속도 매우 빠르게) 없으면 그냥 싸우기
-        // 플레이어와 큐브로 플레이어가 바라보는 반대의 위치로 이동
-        if (Physics.Raycast(transform.position, player.position + Vector3.up - transform.position, out hit, 10) && hit.transform.tag == "Player")
-        {
-            nma.destination = player.position;
-            transform.LookAt(hit.point);
-        }
-
-
-        // 큐브 뒤에서 공격은 잠깐 오른쪽 또는 왼쪽으로 나가서 플레이어를 바라보며 2발 쏘고 들어가기
-        // 큐브에 hp 추가해서 파괴 가능하게 하기
-        // 큐브가 파괴되면 적은 또 다른 큐브 찾기 없으면 그냥 싸우기
-
-        // 총쏘는 함수, 근처 큐브를 찾는 함수 
-    }
-    private void OnTriggerEnter(Collider other)
-    { 
-        // 현재 큐브 리스트에 추가하기
     }
 
-    private void OnTriggerExit(Collider other)
+    void LateUpdate()
     {
-        // 리스트에서 삭제하기
+        switch (state)
+        {
+            case 0:
+                if (time >= 1.5)
+                {
+                    time = 0;   
+                    index = Random.Range(0, 3);
+                    nma.destination = target[index].position;
+                }
+                break;
+            case 1:
+                if(sphereHit.Length == 0)
+                {
+                    nma.destination = transform.position;
+                }
+                else
+                {
+                    float minDistance = Vector3.Distance(transform.position, sphereHit[0].transform.position);
+                    int minIndex = 0;
+                    for(int i =1; i < sphereHit.Length; i++)
+                    {
+                        float temp = Vector3.Distance(transform.position, sphereHit[i].transform.position);
+                        if (minDistance > temp)
+                        {
+                            minDistance = temp;
+                            minIndex = i;
+                        }
+                    }
+                    nma.destination = player.position - (player.position - sphereHit[minIndex].transform.position) * 1.3f;
+
+                }
+                break;
+            case 2:
+                transform.LookAt(player.position + new Vector3(0,1f,0));
+
+                break;
+        }
     }
 }

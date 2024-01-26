@@ -31,6 +31,8 @@ public class PlayerWeapon : MonoBehaviour
     public float cartridgeCaseSpeed = 30; //탄피 스피드
     public float cartridgeCaseLifeTime = 3; //탄피 살아있는 시간
 
+    public bool isPlayer;
+
     private Vector3 SlideStartPos; //슬라이드 움직임의 처음 
     private Vector3 SlideTargetPos; //슬라이드가 어디까지 당겨질건지
     private Vector3 MagStartPos; //탄창의 처음 위치
@@ -67,34 +69,37 @@ public class PlayerWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isPlayer)
+        {
+            if (eventSystem != null)
+            {
+                if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading && !eventSystem.IsPointerOverGameObject())
+                {
+                    isShooting = true;
+                    StartCoroutine(shot());
+                    currentBullet--;
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading)
+                {
+                    isShooting = true;
+                    StartCoroutine(shot());
+                    currentBullet--;
+                }
+            }
+            if (currentBullet == 0)
+            {
+                OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
+
+            }
+            if (currentBullet < 0)
+            {
+                audioIndex = 1;
+            }
+        }
         
-        if (eventSystem != null)
-        {
-            if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading && !eventSystem.IsPointerOverGameObject())
-            {
-                isShooting = true;
-                StartCoroutine(shot());
-                currentBullet--;
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading)
-            {
-                isShooting = true;
-                StartCoroutine(shot());
-                currentBullet--;
-            }
-        }
-        if (currentBullet == 0)
-        {
-            OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
-            
-        }
-        if(currentBullet < 0)
-        {
-            audioIndex = 1;
-        }
         
     }
     
