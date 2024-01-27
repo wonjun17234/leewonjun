@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     private RaycastHit[] sphereHit;
     private float dist = 40;
 
+
     void Start()
     {
         if(anim == null)
@@ -55,11 +56,11 @@ public class Enemy : MonoBehaviour
             if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
             {
                 player = forwardHit.transform.gameObject;
+
                 state = 1;
                 time = 0;
             }
         }
-
 
         if (transform.position.x != nma.destination.x && transform.position.z != nma.destination.z)
         {
@@ -69,12 +70,6 @@ public class Enemy : MonoBehaviour
         {
             anim.SetBool("isWalk", false);
         }
-
-        if (hp <= 0)
-        {
-            Destroy(gameObject);
-        }
-
 
     }
     
@@ -86,8 +81,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        time += Time.deltaTime;
-        
+        time += Time.deltaTime;        
     }
 
     void LateUpdate()
@@ -181,6 +175,10 @@ public class Enemy : MonoBehaviour
                     }
                 }
                 break;
+        }
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
