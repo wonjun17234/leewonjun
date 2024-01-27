@@ -8,58 +8,86 @@ using System.Linq;
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent nma;
-    public Transform player;
-    public Transform[] target;
+    public Animator anim;
+    public GameObject player;
     private float time = 0;
-    public int index = 0;
     public int state;
+    public int hp = 100;
+
+    public Vector3 positoin;
 
     public GameObject weapon;
-
     public float radius;
     private RaycastHit rayHit;
+    private RaycastHit forwardHit;
     private RaycastHit[] sphereHit;
+    private float dist = 40;
 
     void Start()
     {
-        if(nma ==null)
+        if(anim == null)
+        {
+            anim = GetComponent<Animator>();
+            Debug.LogWarning("anim가 설정이 안돼있음");
+        }
+        
+        if (nma ==null)
         {
             nma = GetComponent<NavMeshAgent>();
             Debug.LogWarning("nma가 설정이 안돼있음");
         }
-        nma.destination = target[index].position;
+        nma.destination = transform.position + transform.forward * 5f;
         state = 0;
+        
     }
-    
     void FixedUpdate()
     {
+        if(player == null)
+        {
+            state = 0;
+        }
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
-        for (int i = 0; i < sphereHit.Length; i++)
+        
+        
+        if (state == 0 && Physics.SphereCast(transform.position, radius / 3, transform.forward, out forwardHit, dist))
         {
-            Debug.Log(sphereHit[i].transform.gameObject.name);
+            if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
+            {
+                player = forwardHit.transform.gameObject;
+                state = 1;
+                time = 0;
+            }
         }
 
-        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 10) && rayHit.transform.tag == "Player")
+
+        if (transform.position.x != nma.destination.x && transform.position.z != nma.destination.z)
         {
-            state = 1;
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
         }
 
-        if(state == 1 && transform.position.x == nma.destination.x && transform.position.z == nma.destination.z)
+        if (hp <= 0)
         {
-            state = 2;
+            Destroy(gameObject);
         }
+
+
     }
+    
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
-
     void Update()
     {
         time += Time.deltaTime;
+        
     }
 
     void LateUpdate()
@@ -70,14 +98,29 @@ public class Enemy : MonoBehaviour
                 if (time >= 1.5)
                 {
                     time = 0;   
-                    index = Random.Range(0, 3);
-                    nma.destination = target[index].position;
+                    int temp = Random.Range(0, 3);
+                    switch (temp)
+                    {
+                        case 0:
+                            nma.destination = transform.position + transform.forward * 5f;
+                            break;
+                        case 1:
+                            nma.destination = transform.position + transform.right * 5f;
+                            break;
+                        case 2:
+                            nma.destination = transform.position - transform.right * 5f;
+                            break;
+                    }
                 }
                 break;
             case 1:
-                if(sphereHit.Length == 0)
+                if(sphereHit.Length == 0 || time > 3f)
                 {
-                    nma.destination = transform.position;
+                    positoin = transform.position;
+                    nma.destination = positoin;
+                    state = 2;
+                    nma.speed = 1.5f;
+                    
                 }
                 else
                 {
@@ -92,13 +135,51 @@ public class Enemy : MonoBehaviour
                             minIndex = i;
                         }
                     }
-                    nma.destination = player.position - (player.position - sphereHit[minIndex].transform.position) * 1.3f;
-
+                    nma.destination = player.transform.position - (player.transform.position - sphereHit[minIndex].transform.position) * 1.3f;
+                    nma.speed = 6;
                 }
                 break;
             case 2:
-                transform.LookAt(player.position + new Vector3(0,1f,0));
-
+                transform.LookAt(player.transform.position);
+                if (time >= 0.5f)
+                {
+                    time = 0;
+                    if (Physics.Raycast(transform.position, transform.forward, out rayHit, dist)
+                    && GameManager.instance.teams.Contains(rayHit.transform.tag)
+                    && (transform.tag != rayHit.transform.tag))
+                    {
+                        nma.destination = transform.position;
+                        if(weapon.GetComponent<PlayerWeapon>().enemyShot())
+                        {
+                            int temp = Random.Range(0, 2);
+                            if(temp == 0)
+                            {
+                                nma.destination = transform.position + transform.right * 0.5f;
+                            }
+                            else
+                            {
+                                nma.destination = transform.position - transform.right * 0.5f;
+                            }
+                        }
+                        else
+                        {
+                            state = 1;
+                        }  
+                    }
+                    else
+                    {
+                        nma.speed = 3;
+                        int temp = Random.Range(0, 2);
+                        if (temp == 0)
+                        {
+                            nma.destination = transform.position + transform.right * 2f;
+                        }
+                        else
+                        {
+                            nma.destination = transform.position - transform.right * 2f;
+                        }
+                    }
+                }
                 break;
         }
     }

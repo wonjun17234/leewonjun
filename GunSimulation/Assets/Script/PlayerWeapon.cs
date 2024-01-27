@@ -44,6 +44,7 @@ public class PlayerWeapon : MonoBehaviour
     private int MaxBullet = 6; //최대 총알 개수
     private int currentBullet = 6; //현재 총알 개수
 
+
     public ParticleSystem particleLauncher;
     private AudioSource audio;
     public List<AudioClip> audioClips;
@@ -101,8 +102,24 @@ public class PlayerWeapon : MonoBehaviour
         }
         
         
+        
     }
-    
+    public bool enemyShot()
+    {
+        if (!isShooting && !isReloading && currentBullet > 0)
+        {
+            isShooting = true;
+            StartCoroutine(shot());
+            currentBullet--;
+            return true;
+        }
+        else
+        {
+            OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
+            Reload();
+            return false;
+        }
+    }
 
     public void Reload()
     {
@@ -143,6 +160,7 @@ public class PlayerWeapon : MonoBehaviour
         }
         OBJMag = newOBJMag;
         isReloading = false;
+        isReloading = false;
     }
 
     private void Fire() // 총알이 날아가며 발사 이펙트 시작
@@ -150,7 +168,7 @@ public class PlayerWeapon : MonoBehaviour
 
         //GameObject bullet = Instantiate(OBJBulletPrefab);
 
-        //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
+        //Physics.Ignore    ion(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
         //bullet.transform.localPosition = bulletSpawn.position;
         //Vector3 rotation = bulletSpawn.transform.rotation.eulerAngles;
