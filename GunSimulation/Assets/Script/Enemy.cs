@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using System.Drawing;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Enemy : MonoBehaviour
     private float time = 0;
     public int state;
     public int hp = 100;
+    
 
     public Vector3 positoin;
 
@@ -23,10 +25,16 @@ public class Enemy : MonoBehaviour
     private RaycastHit[] sphereHit;
     private float dist = 40;
 
+    public SkinnedMeshRenderer colorRenderer;
+    public Material currentColor;
+    public Material hitColor;
 
+    public float XSpeed;
+    public float ZSpeed;
     void Start()
     {
-        if(anim == null)
+        
+        if (anim == null)
         {
             anim = GetComponent<Animator>();
             Debug.LogWarning("anim가 설정이 안돼있음");
@@ -37,51 +45,75 @@ public class Enemy : MonoBehaviour
             nma = GetComponent<NavMeshAgent>();
             Debug.LogWarning("nma가 설정이 안돼있음");
         }
-        nma.destination = transform.position + transform.forward * 5f;
+        nma.destination = transform.position;
+        nma.speed = 1;
         state = 0;
         
     }
     void FixedUpdate()
     {
-        if(player == null)
-        {
-            state = 0;
-        }
+
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
         
-        
-        if (state == 0 && Physics.SphereCast(transform.position, radius / 3, transform.forward, out forwardHit, dist))
+        if (state == 0 && Physics.SphereCast(transform.position, radius, transform.forward, out forwardHit, dist))
         {
             if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
             {
                 player = forwardHit.transform.gameObject;
-
                 state = 1;
                 time = 0;
             }
         }
 
-        if (transform.position.x != nma.destination.x && transform.position.z != nma.destination.z)
+        if (Mathf.Ceil(transform.position.x) != Mathf.Ceil(nma.destination.x) || Mathf.Ceil(transform.position.z) != Mathf.Ceil(nma.destination.z))
         {
             anim.SetBool("isWalk", true);
         }
         else
         {
             anim.SetBool("isWalk", false);
+
         }
 
+        if (state != 0 && player.GetComponent<Enemy>().hp <= 0)
+        {
+            player = null;
+            state = 0;
+        }
     }
-    
+    public void hit()
+    {
+        hp -= 20;
+        StartCoroutine("colorSet");
+    }
 
-    void OnDrawGizmos()
+    public IEnumerator colorSet()
+    {
+        colorRenderer.materials[0].color = hitColor.color;
+        colorRenderer.materials[1].color = hitColor.color;
+
+        yield return new WaitForSeconds(0.4f);
+
+        colorRenderer.materials[0].color = currentColor.color;
+        colorRenderer.materials[1].color = currentColor.color;
+    }
+
+    /*void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    }*/
     void Update()
     {
-        time += Time.deltaTime;        
+        time += Time.deltaTime;
+        anim.SetFloat("speed", nma.velocity.magnitude);
+
+        
+        anim.SetFloat("zSpeed", Mathf.Sin(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
+        anim.SetFloat("xSpeed", Mathf.Cos(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
+
+        
     }
 
     void LateUpdate()
@@ -91,30 +123,18 @@ public class Enemy : MonoBehaviour
             case 0:
                 if (time >= 1.5)
                 {
-                    time = 0;   
-                    int temp = Random.Range(0, 3);
-                    switch (temp)
-                    {
-                        case 0:
-                            nma.destination = transform.position + transform.forward * 5f;
-                            break;
-                        case 1:
-                            nma.destination = transform.position + transform.right * 5f;
-                            break;
-                        case 2:
-                            nma.destination = transform.position - transform.right * 5f;
-                            break;
-                    }
+                    time = 0;
+                    float xRand = Random.Range(-5f, 5f);
+                    float zRand = Random.Range(-5f, 5f);
+                    nma.destination = transform.position + new Vector3(xRand,0,zRand);
                 }
                 break;
             case 1:
-                if(sphereHit.Length == 0 || time > 3f)
+                if(sphereHit.Length == 0 || time > 1f)
                 {
                     positoin = transform.position;
                     nma.destination = positoin;
                     state = 2;
-                    nma.speed = 1.5f;
-                    
                 }
                 else
                 {
@@ -130,7 +150,6 @@ public class Enemy : MonoBehaviour
                         }
                     }
                     nma.destination = player.transform.position - (player.transform.position - sphereHit[minIndex].transform.position) * 1.3f;
-                    nma.speed = 6;
                 }
                 break;
             case 2:
@@ -162,7 +181,6 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        nma.speed = 3;
                         int temp = Random.Range(0, 2);
                         if (temp == 0)
                         {

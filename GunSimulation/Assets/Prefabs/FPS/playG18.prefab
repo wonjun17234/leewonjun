@@ -367,6 +367,7 @@ MonoBehaviour:
   bulletLifeTime: 5
   cartridgeCaseSpeed: 1
   cartridgeCaseLifeTime: 3
+  isPlayer: 0
   particleLauncher: {fileID: 1145605571659419776}
   audioClips:
   - {fileID: 8300000, guid: 65fcc35a1f13c2b428d4a1340b61b599, type: 3}
@@ -10192,8 +10193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4d8ec9088328241a99f81ed886c802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0}
+  offset: 0
   particleLauncher: {fileID: 1145605571659419776}
+  parent: {fileID: 0}
 --- !u!1 &2038937738413867028
 GameObject:
   m_ObjectHideFlags: 0

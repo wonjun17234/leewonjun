@@ -431,7 +431,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 500
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -927,7 +927,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 25
+    angle: 0.5
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1753,7 +1753,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 3
@@ -2947,7 +2947,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   NoiseModule:
-    enabled: 0
+    enabled: 1
     strength:
       serializedVersion: 2
       minMaxState: 0
@@ -3057,7 +3057,7 @@ ParticleSystem:
     strengthZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3107,8 +3107,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    separateAxes: 0
-    frequency: 0.5
+    separateAxes: 1
+    frequency: 1.06
     damping: 1
     octaves: 1
     octaveMultiplier: 0.5
@@ -3117,7 +3117,7 @@ ParticleSystem:
     scrollSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1.07
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5105,8 +5105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4d8ec9088328241a99f81ed886c802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0.25}
+  offset: 0
   particleLauncher: {fileID: 8964809103424121389}
+  parent: {fileID: 0}
 --- !u!1 &1621593761058198051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5311,6 +5312,7 @@ MonoBehaviour:
   bulletLifeTime: 5
   cartridgeCaseSpeed: 1
   cartridgeCaseLifeTime: 3
+  isPlayer: 0
   particleLauncher: {fileID: 8964809103424121389}
   audioClips:
   - {fileID: 8300000, guid: 65fcc35a1f13c2b428d4a1340b61b599, type: 3}
