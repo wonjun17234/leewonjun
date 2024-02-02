@@ -6,14 +6,13 @@ using UnityEngine.AI;
 using System.Linq;
 using System.Drawing;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
     public NavMeshAgent nma;
     public Animator anim;
     public GameObject player;
     private float time = 0;
     public int state;
-    public int hp = 100;
     
 
     public Vector3 positoin;
@@ -25,9 +24,7 @@ public class Enemy : MonoBehaviour
     private RaycastHit[] sphereHit;
     private float dist = 40;
 
-    public SkinnedMeshRenderer colorRenderer;
-    public Material currentColor;
-    public Material hitColor;
+    
 
     public float XSpeed;
     public float ZSpeed;
@@ -56,7 +53,7 @@ public class Enemy : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
         
-        if (state == 0 && Physics.SphereCast(transform.position, radius, transform.forward, out forwardHit, dist))
+        if (state == 0 && Physics.SphereCast(transform.position, radius , transform.forward, out forwardHit, dist))
         {
             if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
             {
@@ -76,28 +73,13 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if (state != 0 && player.GetComponent<Enemy>().hp <= 0)
+        if (state != 0 && player.GetComponent<Character>().hp <= 0)
         {
             player = null;
             state = 0;
         }
     }
-    public void hit()
-    {
-        hp -= 20;
-        StartCoroutine("colorSet");
-    }
-
-    public IEnumerator colorSet()
-    {
-        colorRenderer.materials[0].color = hitColor.color;
-        colorRenderer.materials[1].color = hitColor.color;
-
-        yield return new WaitForSeconds(0.4f);
-
-        colorRenderer.materials[0].color = currentColor.color;
-        colorRenderer.materials[1].color = currentColor.color;
-    }
+    
 
     /*void OnDrawGizmos()
     {
@@ -124,13 +106,13 @@ public class Enemy : MonoBehaviour
                 if (time >= 1.5)
                 {
                     time = 0;
-                    float xRand = Random.Range(-5f, 5f);
-                    float zRand = Random.Range(-5f, 5f);
-                    nma.destination = transform.position + new Vector3(xRand,0,zRand);
+                    float xRand = Random.Range(-1f, 1f);
+                    float zRand = Random.Range(-1f, 1f);
+                    nma.destination = transform.position + new Vector3(xRand * 5,0,zRand * 5);
                 }
                 break;
             case 1:
-                if(sphereHit.Length == 0 || time > 1f)
+                if(sphereHit.Length == 0 || time > 2.5f)
                 {
                     positoin = transform.position;
                     nma.destination = positoin;
@@ -157,10 +139,12 @@ public class Enemy : MonoBehaviour
                 if (time >= 0.5f)
                 {
                     time = 0;
+                    
                     if (Physics.Raycast(transform.position, transform.forward, out rayHit, dist)
                     && GameManager.instance.teams.Contains(rayHit.transform.tag)
                     && (transform.tag != rayHit.transform.tag))
                     {
+                        Debug.Log(transform.tag + "   " + rayHit.transform.tag);
                         nma.destination = transform.position;
                         if(weapon.GetComponent<PlayerWeapon>().enemyShot())
                         {

@@ -1076,17 +1076,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9d016552146af4f9219edf43bf1e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 200
+  colorRenderer: {fileID: 2603216732295064538}
+  currentColor: {r: 0, g: 0, b: 1, a: 0}
+  hitColor: {r: 1, g: 1, b: 1, a: 0}
   nma: {fileID: 2249023871373207391}
   anim: {fileID: 1246070755509551958}
   player: {fileID: 0}
   state: 0
-  hp: 200
   positoin: {x: 0, y: 0, z: 0}
   weapon: {fileID: 7810762526839966793}
   radius: 5
-  colorRenderer: {fileID: 2603216732295064538}
-  currentColor: {fileID: 2100000, guid: d5cd37cae2991af4ea98930719caed2d, type: 2}
-  hitColor: {fileID: 2100000, guid: d54471ccc9529894b9e2fc4daef7666f, type: 2}
   XSpeed: 0
   ZSpeed: 0
 --- !u!195 &2249023871373207391
@@ -7749,7 +7749,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5817242540179616753}
   - component: {fileID: 3218180181099859146}
-  - component: {fileID: 8245895084558161315}
   - component: {fileID: 7808053058833123646}
   - component: {fileID: 6282221672295038872}
   m_Layer: 11
@@ -7823,27 +7822,6 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 65fcc35a1f13c2b428d4a1340b61b599, type: 3}
   - {fileID: 8300000, guid: a4289c9439df0d644aca2c1bbd1051aa, type: 3}
---- !u!65 &8245895084558161315
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810762526839966793}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.08133574, y: 0.17669949, z: 0.26422003}
-  m_Center: {x: 0.0076575736, y: -0.015792921, z: -0.0128727155}
 --- !u!114 &7808053058833123646
 MonoBehaviour:
   m_ObjectHideFlags: 0

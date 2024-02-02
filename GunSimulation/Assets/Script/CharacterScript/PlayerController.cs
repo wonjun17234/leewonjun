@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {
     public float rotationYSpeed = 3f;
     public float rotationXSpeed = 5f;
@@ -38,24 +38,24 @@ public class PlayerController : MonoBehaviour
         eulerAngleX -= mouseY * rotationXSpeed;
 
         eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
-        body.transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
-        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY - 50f, 0);
+        transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
+        Camera.transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY - 50f, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
-            body.transform.position += Camera.transform.forward * moveSpeed * Time.deltaTime;
+            transform.position += Camera.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            body.transform.position -= Camera.transform.forward * moveSpeed * Time.deltaTime;
+            transform.position -= Camera.transform.forward * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            body.transform.position -= Camera.transform.right * moveSpeed * Time.deltaTime;
+            transform.position -= Camera.transform.right * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            body.transform.position += Camera.transform.right * moveSpeed * Time.deltaTime;
+            transform.position += Camera.transform.right * moveSpeed * Time.deltaTime;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {

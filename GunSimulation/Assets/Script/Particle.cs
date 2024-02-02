@@ -16,8 +16,7 @@ public class Particle : MonoBehaviour
     }
     private void OnParticleCollision(GameObject other)
     {
-
-        if (other.GetComponent<Target>() != null)   
+        if (other.CompareTag("Cube") )   
         {
             ParticlePhysicsExtensions.GetCollisionEvents(particleLauncher, other, particles);
             GameObject e = Instantiate(other.GetComponent<Target>().Effect);
@@ -28,10 +27,10 @@ public class Particle : MonoBehaviour
                 //e.transform.parent = other.transform;
             }
         }
-        
-        if(other.GetComponent<Enemy>() != null && other != parent)
+        else if(!other.CompareTag(parent.tag))
         {
-            other.GetComponent<Enemy>().hit();
+            Debug.Log(other.name);
+            other.GetComponent<Character>().hit();
         }
  
     }

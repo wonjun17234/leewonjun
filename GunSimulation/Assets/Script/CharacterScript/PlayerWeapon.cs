@@ -195,7 +195,6 @@ public class PlayerWeapon : MonoBehaviour
         {
             GameObject cartridgeCase = Instantiate(OBJCasingPrefab);
 
-            Physics.IgnoreCollision(cartridgeCase.GetComponent<Collider>(), cartridgeCaseSpawn.parent.GetComponent<Collider>());
 
             cartridgeCase.transform.localPosition = cartridgeCaseSpawn.position;
             Vector3 rotation = cartridgeCase.transform.rotation.eulerAngles;

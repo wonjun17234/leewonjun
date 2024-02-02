@@ -5245,7 +5245,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4523743120451833830}
   - component: {fileID: 690228889613985141}
-  - component: {fileID: 7568733783976397284}
   - component: {fileID: 392207534922290351}
   - component: {fileID: 8412293728838025404}
   m_Layer: 0
@@ -5317,27 +5316,6 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 65fcc35a1f13c2b428d4a1340b61b599, type: 3}
   - {fileID: 8300000, guid: a4289c9439df0d644aca2c1bbd1051aa, type: 3}
---- !u!65 &7568733783976397284
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2507327100966263441}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.08133574, y: 0.17669949, z: 0.26422003}
-  m_Center: {x: 0.0076575736, y: -0.015792921, z: -0.0128727155}
 --- !u!114 &392207534922290351
 MonoBehaviour:
   m_ObjectHideFlags: 0
