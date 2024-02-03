@@ -29,9 +29,31 @@ public class Particle : MonoBehaviour
         }
         else if(!other.CompareTag(parent.tag))
         {
-            Debug.Log(other.name);
-            other.GetComponent<Character>().hit();
+            ParticlePhysicsExtensions.GetCollisionEvents(particleLauncher, other, particles);
+            for(int i = 0; i < particles.Count; i++)
+            {
+                string[] p = other.name.Split(":");
+                Debug.Log(p[1]);
+                GameObject targget = other.GetComponentInParent<Character>().gameObject;
+                
+                if (p[1].Equals("Head"))
+                {
+                    targget.GetComponent<Character>().hit(50);
+                }
+                else if (p[1].Equals("Spine2"))
+                {
+                    targget.GetComponent<Character>().hit(30);
+                }
+                else
+                {
+                    targget.GetComponent<Character>().hit(15);
+                }
+
+                if(targget.GetComponentInParent<Enemy>())
+                {
+                    targget.GetComponentInParent<Enemy>().LookPlayer(parent);
+                }
+            }
         }
- 
     }
 }

@@ -10,14 +10,14 @@ public class Character : MonoBehaviour
     public Color currentColor;
     public Color hitColor;
 
-    public void hit()
+    public void hit(float damage)
     {
-        hp -= 20;
+        hp -= damage;
         StartCoroutine("colorSet");
     }
-
     public IEnumerator colorSet()
     {
+        Debug.Log(colorRenderer.materials.Length);
         foreach(Material material in colorRenderer.materials)
         {
             material.color = hitColor;

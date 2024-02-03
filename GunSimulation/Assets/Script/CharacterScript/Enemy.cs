@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Drawing;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : Character
 {
+
     public NavMeshAgent nma;
     public Animator anim;
-    public GameObject player;
+    public GameObject player = null;
     private float time = 0;
     public int state;
     
@@ -22,7 +24,7 @@ public class Enemy : Character
     private RaycastHit rayHit;
     private RaycastHit forwardHit;
     private RaycastHit[] sphereHit;
-    private float dist = 40;
+    private float dist = 80;
 
     
 
@@ -42,8 +44,7 @@ public class Enemy : Character
             nma = GetComponent<NavMeshAgent>();
             Debug.LogWarning("nma가 설정이 안돼있음");
         }
-        nma.destination = transform.position;
-        nma.speed = 1;
+        nma.speed = 1.7f;
         state = 0;
         
     }
@@ -53,11 +54,13 @@ public class Enemy : Character
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
         
-        if (state == 0 && Physics.SphereCast(transform.position, radius , transform.forward, out forwardHit, dist))
+        if (state == 0 && Physics.SphereCast(weapon.transform.position, radius / 2, weapon.transform.forward, out forwardHit))
         {
             if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
             {
-                player = forwardHit.transform.gameObject;
+                Character charHit = forwardHit.transform.GetComponentInParent<Character>();
+                player = charHit.gameObject;
+                //Debug.Log(player.name);
                 state = 1;
                 time = 0;
             }
@@ -94,8 +97,6 @@ public class Enemy : Character
         
         anim.SetFloat("zSpeed", Mathf.Sin(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
         anim.SetFloat("xSpeed", Mathf.Cos(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
-
-        
     }
 
     void LateUpdate()
@@ -131,7 +132,7 @@ public class Enemy : Character
                             minIndex = i;
                         }
                     }
-                    nma.destination = player.transform.position - (player.transform.position - sphereHit[minIndex].transform.position) * 1.3f;
+                    nma.destination = player.transform.position - (player.transform.position - sphereHit[minIndex].transform.position) * 1.6f;
                 }
                 break;
             case 2:
@@ -139,17 +140,16 @@ public class Enemy : Character
                 if (time >= 0.5f)
                 {
                     time = 0;
-                    
-                    if (Physics.Raycast(transform.position, transform.forward, out rayHit, dist)
-                    && GameManager.instance.teams.Contains(rayHit.transform.tag)
-                    && (transform.tag != rayHit.transform.tag))
+
+                    if (Physics.SphereCast(weapon.transform.position, radius / 4, weapon.transform.forward, out rayHit)
+                        && GameManager.instance.teams.Contains(rayHit.transform.tag) && (transform.tag != rayHit.transform.tag)
+                        )
                     {
-                        Debug.Log(transform.tag + "   " + rayHit.transform.tag);
                         nma.destination = transform.position;
-                        if(weapon.GetComponent<PlayerWeapon>().enemyShot())
+                        if (weapon.GetComponent<PlayerWeapon>().enemyShot())
                         {
                             int temp = Random.Range(0, 2);
-                            if(temp == 0)
+                            if (temp == 0)
                             {
                                 nma.destination = transform.position + transform.right * 0.5f;
                             }
@@ -161,7 +161,7 @@ public class Enemy : Character
                         else
                         {
                             state = 1;
-                        }  
+                        }
                     }
                     else
                     {
@@ -181,6 +181,19 @@ public class Enemy : Character
         if (hp <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+
+    public void LookPlayer(GameObject targget)
+    {
+
+        if (player == null)
+        {
+            player = targget;
+            transform.LookAt(targget.transform);
+            state = 1;
+            time = 0;
         }
     }
 }

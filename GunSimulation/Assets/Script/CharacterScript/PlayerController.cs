@@ -43,19 +43,19 @@ public class PlayerController : Character
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Camera.transform.forward * moveSpeed * Time.deltaTime;
+            transform.position += new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= Camera.transform.forward * moveSpeed * Time.deltaTime;
+            transform.position -= new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position -= Camera.transform.right * moveSpeed * Time.deltaTime;
+            transform.position -= new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Camera.transform.right * moveSpeed * Time.deltaTime;
+            transform.position += new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {

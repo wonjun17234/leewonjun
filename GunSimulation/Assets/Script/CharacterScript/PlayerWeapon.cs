@@ -29,7 +29,7 @@ public class PlayerWeapon : MonoBehaviour
     public float bulletLifeTime = 5; //총알이 살아있는 시간
 
     public float cartridgeCaseSpeed = 30; //탄피 스피드
-    public float cartridgeCaseLifeTime = 3; //탄피 살아있는 시간
+    public float cartridgeCaseLifeTime = 0.6f; //탄피 살아있는 시간
 
     public bool isPlayer;
 

@@ -19,6 +19,8 @@ public class FrontUI : MonoBehaviour
 
     private int[] timeScales = {1, 2, 4, 8, 16};
     private int timeIndex = 0;
+
+
     public void restart()
     {
         for(int i =0; i < bluePeople; i++)
@@ -32,16 +34,15 @@ public class FrontUI : MonoBehaviour
     }
     public void createEnemy(bool isBlue)
     {
-        float random = Random.Range(-4,4);
+        float random = Random.Range(-4f,4f);
         if(isBlue && bluePeople < 5)
         {
-            GameObject temp = Instantiate(bluePrefab, blueBase.transform.position + Vector3.forward * random, blueBase.transform.rotation, blueBase.transform);
+            Instantiate(bluePrefab, blueBase.transform.position + Vector3.forward * random, blueBase.transform.rotation, blueBase.transform);
         }
         else if(!isBlue && redPeople < 5)
         {
-            GameObject temp = Instantiate(redPrefab, redBase.transform.position + Vector3.forward * random, redBase.transform.rotation, redBase.transform);
+            Instantiate(redPrefab, redBase.transform.position + Vector3.forward * random, redBase.transform.rotation, redBase.transform);
         }
-        
     }
     public void speedSet()
     {
