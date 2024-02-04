@@ -1132,13 +1132,14 @@ MonoBehaviour:
   colorRenderer: {fileID: 2603216732295064538}
   currentColor: {r: 1, g: 0, b: 0, a: 0}
   hitColor: {r: 1, g: 1, b: 1, a: 0}
+  volume: {fileID: 0}
   nma: {fileID: 2249023871373207391}
   anim: {fileID: 1246070755509551958}
   player: {fileID: 0}
   state: 0
   positoin: {x: 0, y: 0, z: 0}
   weapon: {fileID: 7810762526839966793}
-  radius: 5
+  radius: 3
   XSpeed: 0
   ZSpeed: 0
 --- !u!195 &2249023871373207391
@@ -14076,7 +14077,6 @@ MonoBehaviour:
   offset: 0.25
   particleLauncher: {fileID: 3638969647087226501}
   parent: {fileID: 1494902631783328102}
-  Player: {fileID: 1494902631783328102}
 --- !u!1 &8908710789785467451
 GameObject:
   m_ObjectHideFlags: 0

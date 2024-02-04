@@ -6,15 +6,18 @@ public class GameManager : MonoBehaviour
 {
     public List<string> teams;
     public static GameManager instance;
-    // Start is called before the first frame update
+
     void Start()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
-
     // Update is called once per frame
     void Update()
     {
         
     }
+
 }

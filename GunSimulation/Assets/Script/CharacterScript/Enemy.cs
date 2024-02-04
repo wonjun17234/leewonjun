@@ -53,7 +53,7 @@ public class Enemy : Character
 
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
-        
+
         if (state == 0 && Physics.SphereCast(weapon.transform.position, radius / 2, weapon.transform.forward, out forwardHit))
         {
             if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
@@ -86,7 +86,7 @@ public class Enemy : Character
 
     /*void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireSphere(transform.position, radius);
     }*/
     void Update()
@@ -141,7 +141,7 @@ public class Enemy : Character
                 {
                     time = 0;
 
-                    if (Physics.SphereCast(weapon.transform.position, radius / 4, weapon.transform.forward, out rayHit)
+                    if (Physics.SphereCast(weapon.transform.position, radius / 3, weapon.transform.forward, out rayHit)
                         && GameManager.instance.teams.Contains(rayHit.transform.tag) && (transform.tag != rayHit.transform.tag)
                         )
                     {
@@ -187,12 +187,11 @@ public class Enemy : Character
 
     public void LookPlayer(GameObject targget)
     {
-
         if (player == null)
         {
             player = targget;
             transform.LookAt(targget.transform);
-            state = 1;
+            state = 2;
             time = 0;
         }
     }
