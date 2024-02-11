@@ -19,8 +19,9 @@ public class GameStartPage : MonoBehaviour
         optionMenu.SetActive(true);
     }
 
-    public void ClickStart()
+    public void ClickButton()
     {
-        //로딩 화면으로 이동 또는 모드 선택
+        mainMenu.SetActive(true);
+        optionMenu.SetActive(false);
     }
 }
