@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,13 @@ public class GameStartPage : MonoBehaviour
         optionMenu.SetActive(false);
 
     }
+
+
     public void ClickOption()
     {
         mainMenu.SetActive(false);
         optionMenu.SetActive(true);
     }
-
     public void ClickButton()
     {
         mainMenu.SetActive(true);
