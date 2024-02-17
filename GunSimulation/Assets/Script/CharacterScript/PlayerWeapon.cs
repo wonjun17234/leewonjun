@@ -41,8 +41,8 @@ public class PlayerWeapon : MonoBehaviour
     private bool isShooting = false; //지금 총을 쏘는 중인지
     private bool isReloading = false; //지금 장전 중인지
 
-    private int MaxBullet = 6; //최대 총알 개수
-    private int currentBullet = 6; //현재 총알 개수
+    private int MaxBullet = 8; //최대 총알 개수
+    private int currentBullet = 8; //현재 총알 개수
 
 
     public ParticleSystem particleLauncher;

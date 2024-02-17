@@ -53,9 +53,12 @@ public class Enemy : Character
         int layerMask = 1 << LayerMask.NameToLayer("Enviroment");
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
 
-        if (state == 0 && Physics.SphereCast(weapon.transform.position, radius / 2, weapon.transform.forward, out forwardHit))
+
+        layerMask = (1 << LayerMask.NameToLayer("Enviroment")) + (1 << LayerMask.NameToLayer("Player"));
+        if (Physics.Raycast(weapon.transform.position + weapon.transform.up * 0.05f, weapon.transform.forward, out forwardHit, 10f, layerMask) && state == 0)
         {
-            if (GameManager.instance.teams.Contains(forwardHit.transform.tag) && (transform.tag != forwardHit.transform.tag))
+            if (forwardHit.transform.GetComponentInParent<Character>()
+                && (transform.tag != forwardHit.transform.GetComponentInParent<Character>().tag))
             {
                 Character charHit = forwardHit.transform.GetComponentInParent<Character>();
                 player = charHit.gameObject;
@@ -80,6 +83,7 @@ public class Enemy : Character
             player = null;
             state = 0;
         }
+
     }
     
 
@@ -93,7 +97,10 @@ public class Enemy : Character
         time += Time.deltaTime;
         anim.SetFloat("speed", nma.velocity.magnitude);
 
-        
+        Debug.DrawRay(weapon.transform.position + weapon.transform.up * 0.05f, weapon.transform.forward * 40f);
+        Debug.DrawRay(transform.position, transform.forward * 40f, UnityEngine.Color.red);
+
+
         anim.SetFloat("zSpeed", Mathf.Sin(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
         anim.SetFloat("xSpeed", Mathf.Cos(Vector3.SignedAngle(transform.forward, nma.destination - transform.position, Vector3.up) * Mathf.Deg2Rad));
     }
@@ -117,6 +124,7 @@ public class Enemy : Character
                     positoin = transform.position;
                     nma.destination = positoin;
                     state = 2;
+                    time = 0;
                 }
                 else
                 {
@@ -136,30 +144,34 @@ public class Enemy : Character
                 break;
             case 2:
                 transform.LookAt(player.transform.position);
-                if (time >= 0.5f)
-                {
+                int layerMask = (1 << LayerMask.NameToLayer("Enviroment"))  + (1 << LayerMask.NameToLayer("Player")); 
+                bool c1 = Physics.Raycast(weapon.transform.position + weapon.transform.up * 0.05f, weapon.transform.forward, out rayHit, 10f, layerMask);
+                bool c2 = false;
+                if(c1) { 
+                    c2 = !rayHit.transform.tag.Equals("Cube") && transform.tag != rayHit.transform.GetComponentInParent<Character>().tag;
+                }
+                
+                if(time >= 1f)
+                { 
                     time = 0;
-
-                    if (Physics.SphereCast(weapon.transform.position, radius / 3, weapon.transform.forward, out rayHit)
-                        && GameManager.instance.teams.Contains(rayHit.transform.tag) && (transform.tag != rayHit.transform.tag)
-                        )
+                    if (c1 && c2)
                     {
                         nma.destination = transform.position;
-                        if (weapon.GetComponent<PlayerWeapon>().enemyShot())
+                        if (!weapon.GetComponent<PlayerWeapon>().enemyShot())
+                        {
+                            state = 1;
+                        }
+                        else
                         {
                             int temp = Random.Range(0, 2);
                             if (temp == 0)
                             {
-                                nma.destination = transform.position + transform.right * 0.5f;
+                                nma.destination = transform.position + transform.right * 1f;
                             }
                             else
                             {
-                                nma.destination = transform.position - transform.right * 0.5f;
+                                nma.destination = transform.position - transform.right * 1f;
                             }
-                        }
-                        else
-                        {
-                            state = 1;
                         }
                     }
                     else
