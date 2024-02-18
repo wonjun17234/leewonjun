@@ -16,7 +16,7 @@ public class Particle : MonoBehaviour
     }
     private void OnParticleCollision(GameObject other)
     {
-
+        Debug.Log("aa");
         if (other.CompareTag("Cube") )   
         {
             ParticlePhysicsExtensions.GetCollisionEvents(particleLauncher, other, particles);
