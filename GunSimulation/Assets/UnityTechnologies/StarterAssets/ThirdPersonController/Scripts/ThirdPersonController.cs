@@ -157,10 +157,7 @@ namespace StarterAssets
 
         private void Update()
         { 
-            if (photonView.IsMine == true && PhotonNetwork.IsConnected == true)
-            {
-                return;
-            }
+            
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
