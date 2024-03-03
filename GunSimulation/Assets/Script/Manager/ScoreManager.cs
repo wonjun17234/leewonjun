@@ -10,14 +10,19 @@ public class ScoreManager : MonoBehaviour
     private float time = 50;
     private int enemyNum = 0;
     private int currentEnemyNum = 0;
-
     public Text text;
-    public int score = 0; 
+    public int score = 0;
+
+    public GameObject play;
+    public GameObject option;
+    public bool isOptionOn;
+    public GameObject player;
 
     public GameObject enemyPrefab;
     public GameObject enemyBase;
     void Start()
     {
+        isOptionOn = false;
         text.text = "score : " + score.ToString();
     }
 
@@ -47,6 +52,12 @@ public class ScoreManager : MonoBehaviour
         {
             time = 20f;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClickOptionOut();
+        }
+
     }
 
     public void Reset()
@@ -54,6 +65,23 @@ public class ScoreManager : MonoBehaviour
         for (int i = 0; i < enemyBase.transform.childCount; i++)
         {
             Destroy(enemyBase.transform.GetChild(i).gameObject);
+        }
+    }
+
+    public void ClickOptionOut()
+    {
+        play.SetActive(isOptionOn);
+        isOptionOn = !isOptionOn;
+        option.SetActive(isOptionOn);
+        if (isOptionOn)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = isOptionOn;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = isOptionOn;
         }
     }
 }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class VideoOption : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class VideoOption : MonoBehaviour
     public TMP_Dropdown dropdown;
     public Toggle fullscreenBtn;
     List<Resolution> resolutions = new List<Resolution>();
+
+    [SerializeField]
+    List<RenderPipelineAsset> RenderPipelineAssets;
 
     public int resolutionNum;
 
@@ -30,13 +35,23 @@ public class VideoOption : MonoBehaviour
         }
         dropdown.options.Clear();
 
+
         int optionNum = 0;
         foreach (Resolution item in resolutions)
         {
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
             option.text = item.width + "X" + item.height;
-            
-            if(!dropdown.options.Contains(option))
+
+            bool isA = false;
+            for(int i =0; i < dropdown.options.Count; i++)
+            {
+                if (dropdown.options[i].text.Equals(option.text))
+                {
+                    isA = true;
+                    break;
+                }
+            }
+            if (!isA)
             {
                 dropdown.options.Add(option);
             }
@@ -62,9 +77,16 @@ public class VideoOption : MonoBehaviour
         resolutionNum = x;
         Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
     }
-    public void SelectQuality(int level)
+    public void SelectQuality(int value)
     {
-        QualitySettings.SetQualityLevel(level);
+        QualitySettings.SetQualityLevel(value);
+        QualitySettings.renderPipeline = RenderPipelineAssets[value];
+        //퀄리티 나중에 설정
+    }
+
+    public void soundChange(float value)
+    {
+        //나중에 사운드 설정 https://malbongcode.tistory.com/40
     }
 
 }

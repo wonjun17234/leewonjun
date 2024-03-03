@@ -15,7 +15,6 @@ public class GameStartPage : MonoBehaviour
 
     }
 
-
     public void ClickOption()
     {
         mainMenu.SetActive(false);

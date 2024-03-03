@@ -19,6 +19,8 @@ public class PlayerController : Character
     private float eulerAngleX;
     private float eulerAngleY;
 
+    public GameObject manager;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -30,41 +32,44 @@ public class PlayerController : Character
     // Update is called once per frame
     void Update()
     {
+        if(!manager.GetComponent<ScoreManager>().isOptionOn)
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+
+            eulerAngleY += mouseX * rotationYSpeed;
+            eulerAngleX -= mouseY * rotationXSpeed;
+
+            eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
+            transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
+            Camera.transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY - 50f, 0);
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.position += new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.position -= new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.position -= new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.position += new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                body.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                weapon.Reload();
+            }
+        }
         
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        eulerAngleY += mouseX * rotationYSpeed;
-        eulerAngleX -= mouseY * rotationXSpeed;
-
-        eulerAngleX = ClampAngle(eulerAngleX, -90f, 90f);
-        transform.rotation = Quaternion.Euler(0, eulerAngleY, 0);
-        Camera.transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY - 50f, 0);
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position -= new Vector3(Camera.transform.forward.x, 0, Camera.transform.forward.z) * moveSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position -= new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += new Vector3(Camera.transform.right.x, 0, Camera.transform.right.z) * moveSpeed * Time.deltaTime;
-        }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            body.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            weapon.Reload();
-        }
         
     }
 

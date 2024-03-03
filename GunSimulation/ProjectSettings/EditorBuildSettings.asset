@@ -6,30 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/photon/photonScenes/photon.unity
-    guid: 953e723dd4a326246b1a2ab6b53625cd
-  - enabled: 1
     path: Assets/Scenes/StartView.unity
     guid: fbf30389a7a235f47b9b5433e5b2d6cb
   - enabled: 0
     path: Assets/Scenes/Guntest.unity
     guid: 0e2e7a25699f8cd45b24691913b50770
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/FrontTest1.unity
     guid: 1714e9c6000c71b46bf3fee9a5c2f601
-  - enabled: 1
-    path: Assets/Scenes/photon/photonScenes/roomScenes1.unity
-    guid: 1e00ef91c96007e4b8084b3269cc3bd1
-  - enabled: 1
-    path: Assets/Scenes/photon/photonScenes/roomScenes2.unity
-    guid: 873882cd75524314fb13b0257537d230
-  - enabled: 1
-    path: Assets/Scenes/photon/photonScenes/roomScenes3.unity
-    guid: 0571b107d71139f45bba734329b5dc21
-  - enabled: 1
-    path: Assets/Scenes/photon/photonScenes/roomScenes4.unity
-    guid: 3e468408870604845957fdfd573b7c74
   m_configObjects: {}
