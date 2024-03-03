@@ -1344,6 +1344,7 @@ MonoBehaviour:
   colorRenderer: {fileID: 3312608540037464591}
   currentColor: {r: 1, g: 1, b: 1, a: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 0}
+  volume: {fileID: 0}
   rotationYSpeed: 4
   rotationXSpeed: 5
   bcursor: 0
@@ -1352,6 +1353,7 @@ MonoBehaviour:
   Camera: {fileID: 7655278911934655785}
   body: {fileID: 3324234111053599602}
   weapon: {fileID: 5696563648554472484}
+  manager: {fileID: 0}
 --- !u!65 &1594888530075713213
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2866,7 +2868,9 @@ GameObject:
   - component: {fileID: 1888965423251976304}
   - component: {fileID: 6291028068887759191}
   - component: {fileID: 3110337190601570391}
-  m_Layer: 9
+  - component: {fileID: 7984506317976454506}
+  - component: {fileID: 8976518628352787971}
+  m_Layer: 12
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2947,6 +2951,110 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655278911934655785}
   m_Enabled: 1
+--- !u!114 &7984506317976454506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655278911934655785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 1888965423251976304}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!114 &8976518628352787971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655278911934655785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &7797490257875554558
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,6 +3364,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 578626075360658270, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 689618445635324245, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -3434,7 +3546,7 @@ PrefabInstance:
       objectReference: {fileID: 3324234111053599602}
     - target: {fileID: 8185973291866451530, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: offset
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8185973291866451530, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: parent
@@ -3443,6 +3555,10 @@ PrefabInstance:
     - target: {fileID: 8379712716476419255, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412293728838025404, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8590126831569367169, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: m_Layer
@@ -3453,16 +3569,48 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: simulationSpeed
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: startDelay.scalar
-      value: 500
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.type
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: VelocityModule.z.scalar
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: TriggerModule.radiusScale
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: VelocityModule.z.minScalar
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.radiusScale
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.minKillSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -3471,6 +3619,14 @@ PrefabInstance:
     - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
       value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964809103424121389, guid: 3e01c72eda69542419f9633242a74cc9, type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSize
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

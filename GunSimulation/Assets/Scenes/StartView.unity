@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2472,13 +2472,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1081294988}
+        m_TargetAssemblyTypeName: VideoOption, Assembly-CSharp
+        m_MethodName: soundChange
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2981,6 +2981,7 @@ GameObject:
   - component: {fileID: 621312582}
   - component: {fileID: 621312581}
   - component: {fileID: 621312580}
+  - component: {fileID: 621312583}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3062,6 +3063,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &621312583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621312579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &625878348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,7 +4152,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 182893651}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4840,6 +4885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 926240976}
   - component: {fileID: 926240975}
+  - component: {fileID: 926240977}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -4924,6 +4970,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &926240977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926240974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &938623514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5744,6 +5813,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropdown: {fileID: 633508300}
   fullscreenBtn: {fileID: 1462192170}
+  RenderPipelineAssets:
+  - {fileID: 11400000, guid: ff71f173dc09a464294689b925b81c0a, type: 2}
+  - {fileID: 11400000, guid: 97b95248e75543b4a97026fbd3d35aa4, type: 2}
+  - {fileID: 11400000, guid: a80ff49ff29a31f4590bb00a34f172f8, type: 2}
   resolutionNum: 0
 --- !u!114 &1081294989
 MonoBehaviour:
@@ -6661,7 +6734,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1081294988}
         m_TargetAssemblyTypeName: VideoOption, Assembly-CSharp
-        m_MethodName: DropboxOptinoChange
+        m_MethodName: SelectQuality
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -49,6 +49,9 @@ public class PlayerWeapon : MonoBehaviour
     private AudioSource audio;
     public List<AudioClip> audioClips;
     private int audioIndex;
+
+    public GameObject manager;
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -83,12 +86,16 @@ public class PlayerWeapon : MonoBehaviour
             }
             else
             {
-                if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading)
+                if (!manager.GetComponent<ScoreManager>().isOptionOn)
                 {
-                    isShooting = true;
-                    StartCoroutine(shot());
-                    currentBullet--;
+                    if (Input.GetMouseButtonDown(0) && !isShooting && !isReloading)
+                    {
+                        isShooting = true;
+                        StartCoroutine(shot());
+                        currentBullet--;
+                    }
                 }
+                    
             }
             if (currentBullet == 0)
             {
