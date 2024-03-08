@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 
 public class Character : MonoBehaviour
@@ -23,14 +24,14 @@ public class Character : MonoBehaviour
         {
             material.color = hitColor;
         }
-        if(GetComponent<PlayerController>() != null)
+        if(volume != null && volume.GetComponent<Volume>() != null)
         {
-            volume.GetComponent<PostProcessVolume>().enabled = true;
+            volume.GetComponent<Volume>().enabled = true;
         }
         yield return new WaitForSeconds(0.4f);
-        if (GetComponent<PlayerController>() != null)
+        if (volume != null && volume.GetComponent<Volume>() != null)
         {
-            volume.GetComponent<PostProcessVolume>().enabled = false;
+            volume.GetComponent<Volume>().enabled = false;
         }
         foreach (Material material in colorRenderer.materials)
         {
