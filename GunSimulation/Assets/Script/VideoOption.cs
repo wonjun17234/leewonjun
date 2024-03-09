@@ -9,7 +9,8 @@ using static UnityEngine.Rendering.DebugUI;
 public class VideoOption : MonoBehaviour
 {
     FullScreenMode screenMode;
-    public TMP_Dropdown dropdown;
+    public TMP_Dropdown rdropdown;
+    public TMP_Dropdown qdropdown;
     public Toggle fullscreenBtn;
     List<Resolution> resolutions = new List<Resolution>();
 
@@ -18,9 +19,13 @@ public class VideoOption : MonoBehaviour
 
     public int resolutionNum;
 
+
+    public GameDataObject scriptableObject;
+
     // Start is called before the first frame update
     void Start()
     {
+
         Init();
     }
 
@@ -33,9 +38,9 @@ public class VideoOption : MonoBehaviour
                 resolutions.Add(Screen.resolutions[i]);
             //}
         }
-        dropdown.options.Clear();
+        rdropdown.options.Clear();
 
-
+        Set();
         int optionNum = 0;
         foreach (Resolution item in resolutions)
         {
@@ -43,9 +48,9 @@ public class VideoOption : MonoBehaviour
             option.text = item.width + "X" + item.height;
 
             bool isA = false;
-            for(int i =0; i < dropdown.options.Count; i++)
+            for(int i =0; i < rdropdown.options.Count; i++)
             {
-                if (dropdown.options[i].text.Equals(option.text))
+                if (rdropdown.options[i].text.Equals(option.text))
                 {
                     isA = true;
                     break;
@@ -53,32 +58,50 @@ public class VideoOption : MonoBehaviour
             }
             if (!isA)
             {
-                dropdown.options.Add(option);
+                rdropdown.options.Add(option);
             }
 
-            if (item.width == Screen.width && item.height == Screen.height)
+            if (item.width == scriptableObject.resolutionWidth && item.height == scriptableObject.resolutionHeight)
             {
-                dropdown.value = optionNum;
+                rdropdown.value = optionNum;
             }
             optionNum++;
         }
 
-        dropdown.RefreshShownValue();
+        rdropdown.RefreshShownValue();
 
-        fullscreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
+        fullscreenBtn.isOn = scriptableObject.screenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
     }
+
+    public void Set()
+    {
+        Screen.SetResolution(scriptableObject.resolutionWidth, scriptableObject.resolutionHeight, scriptableObject.screenMode);
+        screenMode = scriptableObject.screenMode;
+
+
+        qdropdown.value = scriptableObject.qualitySettingsNum;
+        QualitySettings.SetQualityLevel(scriptableObject.qualitySettingsNum);
+        QualitySettings.renderPipeline = RenderPipelineAssets[scriptableObject.qualitySettingsNum];
+
+    }
+
     public void FullScreenBtn(bool isFull)
     {
         screenMode = isFull ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        scriptableObject.screenMode = screenMode;
         Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
     }
     public void DropboxOptinoChange(int x)
     {
         resolutionNum = x;
+        scriptableObject.resolutionWidth = resolutions[resolutionNum].width; //
+        scriptableObject.resolutionHeight = resolutions[resolutionNum].height;
         Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
+        
     }
     public void SelectQuality(int value)
     {
+        scriptableObject.qualitySettingsNum = value;
         QualitySettings.SetQualityLevel(value);
         QualitySettings.renderPipeline = RenderPipelineAssets[value];
         //퀄리티 나중에 설정

@@ -100,7 +100,6 @@ public class PlayerWeapon : MonoBehaviour
             if (currentBullet == 0)
             {
                 OBJMag.GetComponent<MeshFilter>().mesh = transform.GetComponent<Mag_Mesh>().mesh[1];
-
             }
             if (currentBullet < 0)
             {
@@ -271,5 +270,17 @@ public class PlayerWeapon : MonoBehaviour
 
         Destroy(DObject);
     }
+
+    public void Drop() 
+    {
+        if (transform.parent != null)
+        {
+            transform.SetParent(null);
+
+            Rigidbody rigidbody = gameObject.AddComponent<Rigidbody>();
+            rigidbody.AddForce(gameObject.transform.forward, ForceMode.Impulse);
+        }
+    }
+
 
 }

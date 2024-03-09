@@ -5811,13 +5811,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1875a495aebe98e41be9dcca889e9287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 633508300}
+  rdropdown: {fileID: 633508300}
+  qdropdown: {fileID: 1292757827}
   fullscreenBtn: {fileID: 1462192170}
   RenderPipelineAssets:
   - {fileID: 11400000, guid: ff71f173dc09a464294689b925b81c0a, type: 2}
   - {fileID: 11400000, guid: 97b95248e75543b4a97026fbd3d35aa4, type: 2}
   - {fileID: 11400000, guid: a80ff49ff29a31f4590bb00a34f172f8, type: 2}
   resolutionNum: 0
+  scriptableObject: {fileID: 11400000, guid: feae4eed67b3ba848be05540e3cc11e4, type: 2}
 --- !u!114 &1081294989
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5247,6 +5247,7 @@ GameObject:
   - component: {fileID: 690228889613985141}
   - component: {fileID: 392207534922290351}
   - component: {fileID: 8412293728838025404}
+  - component: {fileID: 4055228498983436247}
   m_Layer: 0
   m_Name: g18
   m_TagString: Untagged
@@ -5316,6 +5317,7 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 65fcc35a1f13c2b428d4a1340b61b599, type: 3}
   - {fileID: 8300000, guid: a4289c9439df0d644aca2c1bbd1051aa, type: 3}
+  manager: {fileID: 0}
 --- !u!114 &392207534922290351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5427,6 +5429,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &4055228498983436247
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2507327100966263441}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06446101, y: 0.18421212, z: 0.20425482}
+  m_Center: {x: 0.0066032335, y: -0.011299476, z: -0.0033312067}
 --- !u!1 &2545733626904853492
 GameObject:
   m_ObjectHideFlags: 0

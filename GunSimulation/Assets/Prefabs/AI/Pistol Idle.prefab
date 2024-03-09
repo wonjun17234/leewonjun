@@ -1237,10 +1237,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2695929819541424584}
   - component: {fileID: 8325450607454032818}
-  - component: {fileID: 2354832891772366920}
   - component: {fileID: 7440619166749421953}
   - component: {fileID: 3434973387272722572}
-  - component: {fileID: 1594888530075713213}
   m_Layer: 9
   m_Name: Pistol Idle
   m_TagString: Player
@@ -1285,33 +1283,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &2354832891772366920
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3324234111053599602}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &7440619166749421953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1345,36 +1316,21 @@ MonoBehaviour:
   currentColor: {r: 1, g: 1, b: 1, a: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   volume: {fileID: 0}
+  speed: 0
+  JumpPower: 10
+  currentJump: 0
+  gravity: 0
+  isGround: 0
+  isJumping: 0
+  time: 0
+  direction: {fileID: 0}
   rotationYSpeed: 4
   rotationXSpeed: 5
   bcursor: 0
-  moveSpeed: 3
-  JumpPower: 10
   Camera: {fileID: 7655278911934655785}
   body: {fileID: 3324234111053599602}
   weapon: {fileID: 5696563648554472484}
   manager: {fileID: 0}
---- !u!65 &1594888530075713213
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3324234111053599602}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.11742754, y: 0.20437318, z: 0.08441756}
-  m_Center: {x: -0.07236766, y: 0.15015791, z: 0.08766141}
 --- !u!1 &3458318800877444211
 GameObject:
   m_ObjectHideFlags: 0

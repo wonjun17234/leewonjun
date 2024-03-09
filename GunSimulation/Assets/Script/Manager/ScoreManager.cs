@@ -53,10 +53,7 @@ public class ScoreManager : MonoBehaviour
             time = 20f;
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            ClickOptionOut();
-        }
+        
 
     }
 
