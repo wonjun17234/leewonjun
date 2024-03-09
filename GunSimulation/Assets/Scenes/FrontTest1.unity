@@ -4189,7 +4189,7 @@ PrefabInstance:
       objectReference: {fileID: 1407355196}
     - target: {fileID: 3434973387272722572, guid: f864b9aa2118d514d9643d214216889d, type: 3}
       propertyPath: gravity
-      value: 9.18
+      value: 0.918
       objectReference: {fileID: 0}
     - target: {fileID: 3434973387272722572, guid: f864b9aa2118d514d9643d214216889d, type: 3}
       propertyPath: manager
@@ -4209,7 +4209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3434973387272722572, guid: f864b9aa2118d514d9643d214216889d, type: 3}
       propertyPath: gravityOffset
-      value: 0.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3613036316926308845, guid: f864b9aa2118d514d9643d214216889d, type: 3}
       propertyPath: m_Volume
