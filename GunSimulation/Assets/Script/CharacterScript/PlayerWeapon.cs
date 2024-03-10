@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class PlayerWeapon : MonoBehaviour
+public class PlayerWeapon : Item
 {
     public GameObject OBJBulletPrefab; // 총알 프리펩 
     public Transform bulletSpawn; // 총알 프리펩 스폰 위치

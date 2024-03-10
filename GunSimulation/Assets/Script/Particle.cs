@@ -16,7 +16,6 @@ public class Particle : MonoBehaviour
     }
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("aa");
         if (other.CompareTag("Cube") )   
         {
             ParticlePhysicsExtensions.GetCollisionEvents(particleLauncher, other, particles);
@@ -35,7 +34,8 @@ public class Particle : MonoBehaviour
             {
                 string[] p = other.name.Split(":");
                 GameObject targget = other.GetComponentInParent<Character>().gameObject;
-                
+
+
                 if (p[1].Equals("Head"))
                 {
                     targget.GetComponent<Character>().hit(50);

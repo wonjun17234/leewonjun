@@ -54,6 +54,7 @@ public class Enemy : Character
         sphereHit = Physics.SphereCastAll(transform.position, radius, transform.up, 0, layerMask);
 
 
+
         layerMask = (1 << LayerMask.NameToLayer("Enviroment")) + (1 << LayerMask.NameToLayer("Player"));
         if (Physics.Raycast(weapon.transform.position + weapon.transform.up * 0.05f, weapon.transform.forward, out forwardHit, 10f, layerMask) && state == 0)
         {
